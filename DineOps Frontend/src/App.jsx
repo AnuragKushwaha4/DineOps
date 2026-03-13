@@ -4,6 +4,7 @@ import Auth from "./Components/Auth.jsx"
 import Order from "./Components/Orders.jsx"
 
 import Header from "./Components/CommanComponents/Header.jsx"
+import NavigationBar from "./Components/CommanComponents/NavigationBar.jsx"
 
 function App() {
 
@@ -35,7 +36,9 @@ function App() {
   return (
     <>
       <Header/>
+      <NavigationBar/>
       <RouterProvider router={router}></RouterProvider>
+      
     </>
   )
 }
