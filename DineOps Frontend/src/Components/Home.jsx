@@ -1,30 +1,36 @@
 import React from 'react'
+import WelcomeBanner from './HomeComponents/WelcomeBanner'
+import RecentOrders from './HomeComponents/RecentOrders'
+import InfoDashboard from './HomeComponents/InfoDashboard'
+import PopularDishes from './HomeComponents/PopularDishes'
 
 const Home = () => {
   return (
     <section className="flex w-full min-h-[calc(100vh-80px)] bg-blue-50">
 
       {/* Left Section (3 parts) */}
-      <div className="flex-[3] bg-white p-6 shadow-sm">
-        <h2 className="text-2xl font-semibold text-blue-600 mb-4">
-          Dashboard
-        </h2>
+      <div className="flex-[3] bg-white p-6 shadow-sm flex flex-col gap-6">
 
-        <p className="text-gray-600">
-          Welcome to DineOps POS system. Manage orders, tables, and restaurant
-          operations from here.
-        </p>
+        <WelcomeBanner/>
+
+        {/* Horizontal Section */}
+        <div className="flex gap-6">
+
+          <div className="flex-1">
+            <InfoDashboard/>
+          </div>
+
+          <div className="flex-1">
+            <RecentOrders/>
+          </div>
+
+        </div>
+
       </div>
 
       {/* Right Section (2 parts) */}
       <div className="flex-[2] bg-blue-100 p-6">
-        <h2 className="text-xl font-semibold text-blue-700 mb-4">
-          Quick Actions
-        </h2>
-
-        <p className="text-gray-700">
-          Create new orders, check notifications, and manage tasks quickly.
-        </p>
+        <PopularDishes/>
       </div>
 
     </section>
