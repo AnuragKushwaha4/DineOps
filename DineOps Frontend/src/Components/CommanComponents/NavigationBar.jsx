@@ -15,6 +15,10 @@ const NavigationBar = () => {
  function handleOrders(){
   navigate("/order")
  }
+ function HandleTables(){
+  navigate("/tables")
+ }
+ 
   return (
     <div className="fixed bottom-0 left-0 w-full bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.08)] border-t flex justify-around items-center py-2">
 
@@ -36,7 +40,7 @@ const NavigationBar = () => {
       </button>
 
       {/* Tables */}
-      <button className="flex flex-col items-center text-gray-600 hover:text-blue-500">
+      <button onClick={HandleTables} className="flex flex-col items-center text-gray-600 hover:text-blue-500">
         <MdTableRestaurant className="text-2xl"/>
         <span className="text-xs">Tables</span>
       </button>

@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./Components/Home.jsx";
 import Auth from "./Components/Auth.jsx";
 import Order from "./Components/Orders.jsx";
-
+import Tables  from "./Components/Tables.jsx";
 import Layout from "../src/Components/Layout.jsx";
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout />,   // Layout wrapper
+      element: <Layout />,  
       children: [
         {
           path: "/",
@@ -24,6 +24,10 @@ function App() {
         {
           path: "/order",
           element: <Order />
+        },
+        {
+          path:"/tables",
+          element:<Tables/>
         }
       ]
     }
