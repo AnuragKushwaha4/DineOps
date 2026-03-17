@@ -27,7 +27,7 @@ const NavigationBar = () => {
           <span className="text-[10px] mt-1">Home</span>
         </button>
 
-        {/* Orders */}
+        
         <button 
           onClick={() => navigate("/order")} 
           className="flex flex-col items-center text-gray-500 hover:text-blue-500 transition"
