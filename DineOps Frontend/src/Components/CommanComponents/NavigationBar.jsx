@@ -6,6 +6,8 @@ import { MdTableRestaurant } from "react-icons/md";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { IoAdd } from "react-icons/io5";
 import OrderCreation from './OrderCreation';
+ import { FiUser, FiPhone } from "react-icons/fi";
+import { MdPeople } from "react-icons/md";
 
 const NavigationBar = () => {
   const navigate = useNavigate();
@@ -62,53 +64,57 @@ const NavigationBar = () => {
       </div>
 
       {/* POPUP */}
-      <OrderCreation 
+     
+
+<OrderCreation 
   Title="Create Order" 
   isOrderCreation={isOrderCreation} 
   Close={() => setOrderCreation(false)}
 >
-  <div className="flex flex-col gap-4">
+  <div className="space-y-5">
 
-    {/* Customer Name */}
-    <div className="flex flex-col">
-      <label className="text-sm text-gray-600 mb-1">
-        Customer Name
-      </label>
-      <input 
-        type="text" 
-        name="customername"
-        placeholder="Enter customer name"
-        className="px-4 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
-      />
+    {/* Section Title */}
+    <div>
+      <h2 className="text-sm text-gray-500">Customer Details</h2>
     </div>
 
-    {/* Phone */}
-    <div className="flex flex-col">
-      <label className="text-sm text-gray-600 mb-1">
-        Customer Phone
-      </label>
-      <input 
-        type="text" 
-        name="customerPhone"
-        placeholder="Enter phone number"
-        className="px-4 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
-      />
+    {/* Card */}
+    <div className="bg-gray-50 p-4 rounded-2xl shadow-sm space-y-4">
+
+      {/* Name */}
+      <div className="flex items-center gap-3 bg-white px-3 py-2 rounded-xl border border-gray-200 focus-within:ring-2 focus-within:ring-blue-400 transition">
+        <FiUser className="text-gray-400 text-lg"/>
+        <input 
+          type="text"
+          placeholder="Customer Name"
+          className="w-full outline-none text-sm"
+        />
+      </div>
+
+      {/* Phone */}
+      <div className="flex items-center gap-3 bg-white px-3 py-2 rounded-xl border border-gray-200 focus-within:ring-2 focus-within:ring-blue-400 transition">
+        <FiPhone className="text-gray-400 text-lg"/>
+        <input 
+          type="text"
+          placeholder="Phone Number"
+          className="w-full outline-none text-sm"
+        />
+      </div>
+
+      {/* Guests */}
+      <div className="flex items-center gap-3 bg-white px-3 py-2 rounded-xl border border-gray-200 focus-within:ring-2 focus-within:ring-blue-400 transition">
+        <MdPeople className="text-gray-400 text-lg"/>
+        <input 
+          type="number"
+          placeholder="Number of Guests"
+          className="w-full outline-none text-sm"
+        />
+      </div>
+
     </div>
 
-    {/* Guests */}
-    <div className="flex flex-col">
-      <label className="text-sm text-gray-600 mb-1">
-        Number of Guests
-      </label>
-      <input 
-        type="number"
-        placeholder="Enter number of guests"
-        className="px-4 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
-      />
-    </div>
-
-    {/* Button */}
-    <button className="mt-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 rounded-xl font-medium shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95 transition">
+    {/* Action Button */}
+    <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 rounded-2xl font-semibold shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95 transition">
       Create Order
     </button>
 
