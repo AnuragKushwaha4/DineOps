@@ -1,57 +1,120 @@
-import React from 'react'
-import {useNavigate} from "react-router-dom"
+import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom"
 import { MdHome } from "react-icons/md";
 import { FaClipboardList } from "react-icons/fa";
 import { MdTableRestaurant } from "react-icons/md";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { IoAdd } from "react-icons/io5";
+import OrderCreation from './OrderCreation';
 
 const NavigationBar = () => {
- const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [isOrderCreation, setOrderCreation] = useState(false);
 
- function handlehome(){
-     navigate("/")
- }
- function handleOrders(){
-  navigate("/order")
- }
- function HandleTables(){
-  navigate("/tables")
- }
- 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.08)] border-t flex justify-around items-center py-2">
+    <>
+      {/* NAVBAR */}
+      <div className="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md shadow-[0_-4px_20px_rgba(0,0,0,0.08)] border-t border-gray-100 flex justify-between items-center px-6 py-2 z-40">
 
-      {/* Home */}
-      <button onClick={handlehome} className="flex flex-col items-center  text-gray-600 hover:text-blue-600">
-        <MdHome className="text-2xl"/>
-        <span className="text-xs">Home</span>
-      </button>
+        {/* Home */}
+        <button 
+          onClick={() => navigate("/")} 
+          className="flex flex-col items-center text-gray-500 hover:text-blue-500 transition"
+        >
+          <MdHome className="text-2xl"/>
+          <span className="text-[10px] mt-1">Home</span>
+        </button>
 
-      {/* Orders */}
-      <button onClick={handleOrders} className="flex flex-col items-center text-gray-600 hover:text-blue-500">
-        <FaClipboardList className="text-2xl"/>
-        <span className="text-xs">Orders</span>
-      </button>
+        {/* Orders */}
+        <button 
+          onClick={() => navigate("/order")} 
+          className="flex flex-col items-center text-gray-500 hover:text-blue-500 transition"
+        >
+          <FaClipboardList className="text-2xl"/>
+          <span className="text-[10px] mt-1">Orders</span>
+        </button>
 
-      {/* New Order (Main Action) */}
-      <button className="flex flex-col items-center justify-center bg-blue-500 text-white w-14 h-14 rounded-full shadow-lg hover:bg-blue-600 transition transform hover:scale-105 -mt-8">
-        <IoAdd className="text-3xl"/>
-      </button>
+        {/* Center FAB */}
+        <div className="relative -mt-10">
+          <button 
+            onClick={() => setOrderCreation(true)} 
+            className="flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 text-white w-16 h-16 rounded-full shadow-lg hover:scale-110 active:scale-95 transition"
+          >
+            <IoAdd className="text-3xl"/>
+          </button>
+        </div>
 
-      {/* Tables */}
-      <button onClick={HandleTables} className="flex flex-col items-center text-gray-600 hover:text-blue-500">
-        <MdTableRestaurant className="text-2xl"/>
-        <span className="text-xs">Tables</span>
-      </button>
+        {/* Tables */}
+        <button 
+          onClick={() => navigate("/tables")} 
+          className="flex flex-col items-center text-gray-500 hover:text-blue-500 transition"
+        >
+          <MdTableRestaurant className="text-2xl"/>
+          <span className="text-[10px] mt-1">Tables</span>
+        </button>
 
-      {/* More */}
-      <button className="flex flex-col items-center text-gray-600 hover:text-blue-500">
-        <FiMoreHorizontal className="text-2xl"/>
-        <span className="text-xs">More</span>
-      </button>
+        {/* More */}
+        <button className="flex flex-col items-center text-gray-500 hover:text-blue-500 transition">
+          <FiMoreHorizontal className="text-2xl"/>
+          <span className="text-[10px] mt-1">More</span>
+        </button>
 
+      </div>
+
+      {/* POPUP */}
+      <OrderCreation 
+  Title="Create Order" 
+  isOrderCreation={isOrderCreation} 
+  Close={() => setOrderCreation(false)}
+>
+  <div className="flex flex-col gap-4">
+
+    {/* Customer Name */}
+    <div className="flex flex-col">
+      <label className="text-sm text-gray-600 mb-1">
+        Customer Name
+      </label>
+      <input 
+        type="text" 
+        name="customername"
+        placeholder="Enter customer name"
+        className="px-4 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
+      />
     </div>
+
+    {/* Phone */}
+    <div className="flex flex-col">
+      <label className="text-sm text-gray-600 mb-1">
+        Customer Phone
+      </label>
+      <input 
+        type="text" 
+        name="customerPhone"
+        placeholder="Enter phone number"
+        className="px-4 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
+      />
+    </div>
+
+    {/* Guests */}
+    <div className="flex flex-col">
+      <label className="text-sm text-gray-600 mb-1">
+        Number of Guests
+      </label>
+      <input 
+        type="number"
+        placeholder="Enter number of guests"
+        className="px-4 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
+      />
+    </div>
+
+    {/* Button */}
+    <button className="mt-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 rounded-xl font-medium shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95 transition">
+      Create Order
+    </button>
+
+  </div>
+</OrderCreation>
+    </>
   )
 }
 
