@@ -5,6 +5,7 @@ import Auth from "./Components/Auth.jsx";
 import Order from "./Components/Orders.jsx";
 import Tables  from "./Components/Tables.jsx";
 import Layout from "../src/Components/Layout.jsx";
+import Menu from "./Components/Menu.jsx"
 
 function App() {
 
@@ -28,6 +29,10 @@ function App() {
         {
           path:"/tables",
           element:<Tables/>
+        },
+        {
+          path:"/menu",
+          element:<Menu/>
         }
       ]
     }
