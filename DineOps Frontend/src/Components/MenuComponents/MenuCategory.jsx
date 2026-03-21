@@ -1,7 +1,7 @@
 import React from "react";
 import { menus } from "../../Constants/Constants";
 
-const MenuCategory = () => {
+const MenuCategory = ({selectedCategory,setCategory}) => {
   return (
     <div className="flex flex-col gap-3 pr-2 overflow-y-auto max-h-[80vh]">
 
@@ -12,6 +12,8 @@ const MenuCategory = () => {
             id={index}
             className="bg-white border border-blue-100 rounded-xl p-3 w-full cursor-pointer 
             hover:bg-blue-50 hover:shadow-md transition duration-200"
+
+            onClick={()=>{setCategory(menus[index])}}
           >
             <div className="flex items-center gap-3">
 
