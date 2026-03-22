@@ -12,6 +12,24 @@ import { MdPeople } from "react-icons/md";
 const NavigationBar = () => {
   const navigate = useNavigate();
   const [isOrderCreation, setOrderCreation] = useState(false);
+  const [liveTab,setLiveTab]=useState("/")
+
+  function TabActive(tab){
+    if(tab===liveTab)return true;
+    return false;
+  }
+  function handleHome(){
+    setLiveTab("/")
+    navigate("/")
+  }
+  function handleOrder(){
+    setLiveTab("/order")
+    navigate("/order")
+  }
+  function handleTables(){
+    setLiveTab("/tables")
+    navigate("/tables")
+  }
 
   return (
     <>
@@ -20,7 +38,7 @@ const NavigationBar = () => {
 
         {/* Home */}
         <button 
-          onClick={() => navigate("/")} 
+          onClick={handleHome} 
           className="flex flex-col items-center text-gray-500 hover:text-blue-500 transition"
         >
           <MdHome className="text-2xl"/>
@@ -29,7 +47,7 @@ const NavigationBar = () => {
 
         
         <button 
-          onClick={() => navigate("/order")} 
+          onClick={handleOrder} 
           className="flex flex-col items-center text-gray-500 hover:text-blue-500 transition"
         >
           <FaClipboardList className="text-2xl"/>
@@ -39,7 +57,7 @@ const NavigationBar = () => {
         {/* Center FAB */}
         <div className="relative -mt-10">
           <button 
-            onClick={() => setOrderCreation(true)} 
+            onClick={() => setOrderCreation(true)} disabled={TabActive("/tables") || TabActive("/menu")}
             className="flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-600 text-white w-16 h-16 rounded-full shadow-lg hover:scale-110 active:scale-95 transition"
           >
             <IoAdd className="text-3xl"/>
@@ -48,7 +66,7 @@ const NavigationBar = () => {
 
         {/* Tables */}
         <button 
-          onClick={() => navigate("/tables")} 
+          onClick={handleTables} 
           className="flex flex-col items-center text-gray-500 hover:text-blue-500 transition"
         >
           <MdTableRestaurant className="text-2xl"/>
