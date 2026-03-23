@@ -1,7 +1,11 @@
 import React from "react";
 import { tables } from "../../Constants/Constants";
-
+import {useNavigate} from "react-router-dom" 
 const TablesStatus = () => {
+  const navigate = useNavigate();
+  function handleOrderCreation(status){
+    if(status!="Booked")navigate("/menu")
+  }
   return (
     <div className="flex flex-wrap gap-8 p-8 bg-blue-50 min-h-screen">
       {tables.map((table) => {
@@ -14,8 +18,9 @@ const TablesStatus = () => {
 
         return (
           <div
+            onClick={()=>{handleOrderCreation(table.status)}}
             key={table.id}
-            className="w-72 h-44 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 flex flex-col justify-between border border-blue-100"
+            className="w-72 h-44 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 flex flex-col justify-between border border-blue-100"
           >
             {/* Top Row */}
             <div className="flex justify-between items-center">

@@ -31,6 +31,10 @@ const NavigationBar = () => {
     navigate("/tables")
   }
 
+  function handleCreateOrder(){
+    navigate("/tables")
+    setOrderCreation(false)
+  }
   return (
     <>
       {/* NAVBAR */}
@@ -132,7 +136,7 @@ const NavigationBar = () => {
     </div>
 
     {/* Action Button */}
-    <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 rounded-2xl font-semibold shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95 transition">
+    <button onClick={handleCreateOrder} className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 rounded-2xl font-semibold shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-95 transition">
       Create Order
     </button>
 
