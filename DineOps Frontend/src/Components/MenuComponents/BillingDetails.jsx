@@ -1,6 +1,13 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { getTotal } from "../../Redux/Slice/MenuCartSlice";
 
 const BillingDetails = () => {
+
+  const total = useSelector(getTotal)
+  const tax = total*0.05;
+  const grandTotal = total+tax
+
   return (
     <div className="flex flex-col gap-5 bg-white rounded-xl shadow-md p-4">
 
@@ -9,17 +16,17 @@ const BillingDetails = () => {
 
         <div className="flex justify-between text-gray-600">
           <p>Price</p>
-          <p>₹240</p>
+          <p>₹{total}</p>
         </div>
 
         <div className="flex justify-between text-gray-600">
           <p>Tax</p>
-          <p>₹24</p>
+          <p>₹{tax}</p>
         </div>
 
         <div className="border-t pt-2 flex justify-between font-semibold text-gray-800">
           <p>Total</p>
-          <p>₹264</p>
+          <p>₹{grandTotal}</p>
         </div>
 
       </div>
