@@ -4,7 +4,8 @@ const initialState = {
     customerName:"",
     customerPhone:"",
     customerCount:0,
-    tableNo:0
+    tableNo:0,
+    orderID:""
 }
 
 
@@ -17,13 +18,14 @@ export const CustomerSlice = createSlice({
         state.customerName=name;
         state.customerCount=customercount;
         state.customerPhone=phone;
-        console.log(action.payload)
+        state.orderID = new Date().toISOString().slice(2,10).replace(/-/g,'') + Math.floor(1000 + Math.random()*9000);        console.log(action.payload)
     },
     deleteCustomer:(state)=>{
         state.customerName=""
         state.customerPhone=""
         state.customerCount=0
         state.tableNo=0
+        state.orderID=""
     },
     setTableNumber:(state,action)=>{
         const {table}=action.payload;

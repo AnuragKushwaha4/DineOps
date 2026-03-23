@@ -8,11 +8,17 @@ import { IoAdd } from "react-icons/io5";
 import OrderCreation from './OrderCreation';
  import { FiUser, FiPhone } from "react-icons/fi";
 import { MdPeople } from "react-icons/md";
-
+import {useDispatch} from "react-redux"
+import { createCustomer } from '../../Redux/Slice/CustomerSlice';
 const NavigationBar = () => {
   const navigate = useNavigate();
   const [isOrderCreation, setOrderCreation] = useState(false);
   const [liveTab,setLiveTab]=useState("/")
+  const [name,setname]=useState("")
+  const [phone,setphone]=useState()
+  const [customercount,setcustomercount] = useState();
+  const dispatch = useDispatch();
+
 
   function TabActive(tab){
     if(tab===liveTab)return true;
@@ -32,6 +38,7 @@ const NavigationBar = () => {
   }
 
   function handleCreateOrder(){
+    dispatch(createCustomer({name,phone,customercount}))
     navigate("/tables")
     setOrderCreation(false)
   }
@@ -107,6 +114,8 @@ const NavigationBar = () => {
       <div className="flex items-center gap-3 bg-white px-3 py-2 rounded-xl border border-gray-200 focus-within:ring-2 focus-within:ring-blue-400 transition">
         <FiUser className="text-gray-400 text-lg"/>
         <input 
+          value={name}
+          onChange={(e)=>{setname(e.target.value)}}
           type="text"
           placeholder="Customer Name"
           className="w-full outline-none text-sm"
@@ -117,6 +126,8 @@ const NavigationBar = () => {
       <div className="flex items-center gap-3 bg-white px-3 py-2 rounded-xl border border-gray-200 focus-within:ring-2 focus-within:ring-blue-400 transition">
         <FiPhone className="text-gray-400 text-lg"/>
         <input 
+          value={phone}
+          onChange={(e)=>{setphone(e.target.value)}}
           type="text"
           placeholder="Phone Number"
           className="w-full outline-none text-sm"
@@ -127,6 +138,8 @@ const NavigationBar = () => {
       <div className="flex items-center gap-3 bg-white px-3 py-2 rounded-xl border border-gray-200 focus-within:ring-2 focus-within:ring-blue-400 transition">
         <MdPeople className="text-gray-400 text-lg"/>
         <input 
+          value={customercount}
+          onChange={(e)=>{setcustomercount(e.target.value)}}
           type="number"
           placeholder="Number of Guests"
           className="w-full outline-none text-sm"

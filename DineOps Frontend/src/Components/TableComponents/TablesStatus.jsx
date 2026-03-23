@@ -1,10 +1,18 @@
 import React from "react";
 import { tables } from "../../Constants/Constants";
 import {useNavigate} from "react-router-dom" 
+import { useDispatch } from "react-redux";
+import { setTableNumber } from "../../Redux/Slice/CustomerSlice";
+
+
 const TablesStatus = () => {
   const navigate = useNavigate();
-  function handleOrderCreation(status){
-    if(status!="Booked")navigate("/menu")
+  const dispatch = useDispatch();
+  function handleOrderCreation(table){
+    if(table.status!="Booked"){
+      dispatch(setTableNumber({table:table.id}))
+      navigate("/menu")
+    }
   }
   return (
     <div className="flex flex-wrap gap-8 p-8 bg-blue-50 min-h-screen">
@@ -18,7 +26,7 @@ const TablesStatus = () => {
 
         return (
           <div
-            onClick={()=>{handleOrderCreation(table.status)}}
+            onClick={()=>{handleOrderCreation(table)}}
             key={table.id}
             className="w-72 h-44 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 flex flex-col justify-between border border-blue-100"
           >
