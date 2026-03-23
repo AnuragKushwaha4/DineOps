@@ -4,6 +4,11 @@ import {useSelector} from "react-redux"
 const CartDetails = () => {
 
   const customerInfo = useSelector(state=>state.customer)
+  const CartInfo = useSelector(state=>state.cart)
+
+  console.log(CartInfo);
+  
+  
   return (
     <div className="bg-white rounded-xl shadow-md flex flex-col h-full border border-gray-200 overflow-hidden">
 

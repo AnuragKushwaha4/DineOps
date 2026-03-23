@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { ShoppingCart } from "lucide-react";
+import {useDispatch} from "react-redux"
+import { addItems } from "../../Redux/Slice/MenuCartSlice";
 
 const SelectedCategory = ({ selectedCategory }) => {
-  const [counts, setCounts] = useState({});
+    const dispatch = useDispatch();
 
+  const [counts, setCounts] = useState({});
   const increment = (index) => {
     setCounts((prev) => ({
       ...prev,
@@ -17,6 +20,16 @@ const SelectedCategory = ({ selectedCategory }) => {
       [index]: Math.max((prev[index] || 0) - 1, 0),
     }));
   };
+
+
+  function handleCart(info,count,index){
+    console.log({...info,count:count})
+    dispatch(addItems({...info,count:count}));
+    setCounts(prev => ({
+      ...prev,
+      [index]: 0
+}));
+  }
 
   return (
     <div className="flex flex-col gap-4 pr-4 overflow-y-auto max-h-[80vh]">
@@ -46,6 +59,7 @@ const SelectedCategory = ({ selectedCategory }) => {
 
               {/* Cart Button */}
               <button
+              onClick={()=>{handleCart(info,count,index)}}
                 disabled={count === 0}
                 className={`p-2 rounded-lg transition
                 ${
