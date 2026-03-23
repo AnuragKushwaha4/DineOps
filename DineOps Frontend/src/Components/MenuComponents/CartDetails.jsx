@@ -1,12 +1,16 @@
 import React from "react";
 import { Trash2, User, Phone, Table,Hash } from "lucide-react";
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
+import { deleteItem } from "../../Redux/Slice/MenuCartSlice";
 const CartDetails = () => {
 
   const customerInfo = useSelector(state=>state.customer)
   const CartInfo = useSelector(state=>state.cart)
+  const dispatch = useDispatch()
 
-  console.log(CartInfo);
+  function handleDeletion(item){
+    dispatch(deleteItem(item.id))
+  }
   
   
   return (
@@ -64,14 +68,16 @@ const CartDetails = () => {
         </h1>
 
         <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
-          3 items
+          {CartInfo.length} Items
         </span>
       </div>
 
       {/* Orders List */}
       <div className="flex flex-col gap-3 p-4 overflow-y-auto">
-
-        {[1,2,3].map((item,index)=>(
+        
+        {CartInfo.length ===0 ?(
+          <p  className="text-gray-500 text-sm mt-1 max-w-md">Your Cart is Empty</p>
+        ):CartInfo.map((item,index)=>(
           <div
             key={index}
             className="flex items-center justify-between bg-blue-50 border border-blue-100 rounded-lg p-3 hover:shadow-sm transition"
@@ -80,11 +86,11 @@ const CartDetails = () => {
             {/* Item Info */}
             <div>
               <h1 className="text-sm font-semibold text-gray-800">
-                Aalu Paratha
+                {item.name}
               </h1>
 
               <p className="text-xs text-gray-500">
-                x2
+                x{item.count}
               </p>
             </div>
 
@@ -92,10 +98,10 @@ const CartDetails = () => {
             <div className="flex items-center gap-4">
 
               <p className="text-sm font-semibold text-gray-700">
-                ₹123
+                ₹{item.price*item.count}
               </p>
 
-              <button className="text-red-500 hover:text-red-600 transition">
+              <button onClick={()=>{handleDeletion(item)}} className="text-red-500 hover:text-red-600 transition">
                 <Trash2 size={18}/>
               </button>
 

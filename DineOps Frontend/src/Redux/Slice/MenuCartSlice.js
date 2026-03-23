@@ -15,7 +15,10 @@ export const MenuCartSlice = createSlice({
   },
 })
 
-// Action creators are generated for each case reducer function
+
+export const getTotal = (state)=>{
+  state.cart.reduce((total,item)=>total+item.price,0);
+}
 export const { addItems,deleteItem } = MenuCartSlice.actions
 
 export default MenuCartSlice.reducer
