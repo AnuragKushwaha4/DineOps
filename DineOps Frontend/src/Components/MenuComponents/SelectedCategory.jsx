@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ShoppingCart } from "lucide-react";
 
 const SelectedCategory = ({ selectedCategory }) => {
   const [counts, setCounts] = useState({});
@@ -26,42 +27,62 @@ const SelectedCategory = ({ selectedCategory }) => {
         return (
           <div
             key={index}
-            className="bg-white border border-blue-100 rounded-xl p-4 
-            flex items-center justify-between 
-            hover:shadow-md hover:bg-blue-50 transition"
+            className="bg-white border border-blue-100 rounded-xl p-4
+            hover:shadow-md hover:bg-blue-50 transition flex flex-col gap-4"
           >
 
-            {/* Dish Info */}
-            <div>
-              <h1 className="text-lg font-semibold text-gray-800">
-                {info.name}
-              </h1>
+            {/* Top Row */}
+            <div className="flex justify-between items-start">
 
-              <p className="text-blue-600 font-medium">
-                ₹ {info.price}
-              </p>
+              <div>
+                <h1 className="text-lg font-semibold text-gray-800">
+                  {info.name}
+                </h1>
+
+                <p className="text-blue-600 font-medium mt-1">
+                  ₹ {info.price}
+                </p>
+              </div>
+
+              {/* Cart Button */}
+              <button
+                disabled={count === 0}
+                className={`p-2 rounded-lg transition
+                ${
+                  count === 0
+                    ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    : "bg-blue-500 text-white hover:bg-blue-600"
+                }`}
+              >
+                <ShoppingCart size={18} />
+              </button>
+
             </div>
 
-            {/* Quantity Controller */}
-            <div className="flex items-center gap-3">
+            {/* Bottom Row */}
+            <div className="flex justify-end">
 
-              <button
-                onClick={() => decrement(index)}
-                className="w-8 h-8 rounded-lg bg-gray-100 
-                hover:bg-gray-200 flex items-center justify-center text-lg"
-              >
-                -
-              </button>
+              <div className="flex items-center gap-3 bg-blue-50 px-3 py-1 rounded-lg">
 
-              <p className="w-6 text-center font-medium">{count}</p>
+                <button
+                  onClick={() => decrement(index)}
+                  className="w-7 h-7 rounded-md bg-white border
+                  hover:bg-gray-100 flex items-center justify-center"
+                >
+                  -
+                </button>
 
-              <button
-                onClick={() => increment(index)}
-                className="w-8 h-8 rounded-lg bg-blue-500 
-                text-white hover:bg-blue-600 flex items-center justify-center text-lg"
-              >
-                +
-              </button>
+                <p className="w-5 text-center font-medium">{count}</p>
+
+                <button
+                  onClick={() => increment(index)}
+                  className="w-7 h-7 rounded-md bg-blue-500 text-white
+                  hover:bg-blue-600 flex items-center justify-center"
+                >
+                  +
+                </button>
+
+              </div>
 
             </div>
 
