@@ -1,15 +1,16 @@
 import React from "react";
 import { tables } from "../../Constants/Constants";
 import {useNavigate} from "react-router-dom" 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setTableNumber } from "../../Redux/Slice/CustomerSlice";
 
 
 const TablesStatus = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const customerInfo = useSelector(state=>state.customer)
   function handleOrderCreation(table){
-    if(table.status!="Booked"){
+    if(table.status!="Booked" && customerInfo.customerName!="" && customerInfo.customerPhone!=""){
       dispatch(setTableNumber({table:table.id}))
       navigate("/menu")
     }
