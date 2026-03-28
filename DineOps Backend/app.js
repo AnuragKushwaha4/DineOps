@@ -10,7 +10,7 @@ const ConnectDB = require("./Configs/Connection")
 const app = express()
 
 ConnectDB()
-const PORT = config.port
+const PORT = config.port;
 
 app.get("/",(req,res)=>{
     res.json({message:"server stared"})
