@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const config = require("../Configs/Config")
 
+
 async function Register(req,res,next){
     try{
 
@@ -80,7 +81,7 @@ async function Login(req,res,next){
        return next(error)
     }
 
-
+}
 
 async function GetUserData(req,res,next){
     try{
@@ -90,9 +91,6 @@ async function GetUserData(req,res,next){
     catch(error){
         return next(error)
     }
-
-}
-
 
 }
 

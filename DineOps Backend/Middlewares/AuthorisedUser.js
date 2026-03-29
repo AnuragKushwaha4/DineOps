@@ -12,13 +12,13 @@ async function IsUserAuthorised(req,res,next){
             return next(createHttpError(400,{message:"User is not authorised"}))
         }
 
-        const decodedToken = jwt.verify(accessToken,config.accessTokenSecre )
+        const decodedToken = jwt.verify(accessToken,config.accessTokenSecret )
 
         if(!decodedToken){
             return next(createHttpError(400,{message:"User is not authorised"}))
         }
 
-        const loggedinUser = await UserModel.findById({_id:decodedToken})
+        const loggedinUser = await UserModel.findById({_id:decodedToken._id})
 
         if(!loggedinUser){
             return next(createHttpError(400,{message:"User not found"}))
