@@ -4,7 +4,7 @@ const config = require("./Configs/Config")
 const express = require("express")
 const ConnectDB = require("./Configs/Connection")
 const GlobalErrorHandler = require("./Middlewares/ErrorHandler")
-
+const AuthRoute = require("./Routes/AuthRoutes")
 
 
 
@@ -13,9 +13,18 @@ const app = express()
 ConnectDB()
 const PORT = config.port;
 
+app.use(express.json())
+app.use("/api/auth",AuthRoute)
+
+
+
 app.get("/",(req,res)=>{
     res.json({message:"server stared"})
 })
+
+
+
+
 
 
 // Error handler :
