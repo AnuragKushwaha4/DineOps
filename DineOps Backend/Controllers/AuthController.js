@@ -2,6 +2,8 @@ const usermodel = require("../Models/UserModel")
 const createHttpError = require("http-errors")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+const config = require("../Configs/Config")
+
 
 async function Register(req,res,next){
     try{
@@ -29,7 +31,7 @@ async function Register(req,res,next){
             password:hashedPassword
         })
 
-        res.status(201).json({
+        return res.status(201).json({
             success:true,
             message:"New User created",
             data:newUser
@@ -37,14 +39,53 @@ async function Register(req,res,next){
 
     }
     catch(error){
-        next(error)
+       return next(error)
     }
 }
 
-async function Login(req,res,next){
-    const {email,password} = req.body;
 
-    
+
+
+async function Login(req,res,next){
+    try{
+        const {email,password}= req.body;
+
+        const isUserPresent = await usermodel.findOne({email:email})
+
+        if(!isUserPresent){
+            return next(createHttpError(400,"Invalid email or password"));
+        }
+
+        const isValid = bcrypt.compare(password,isUserPresent.password);
+        if(!isValid){
+            return next(createHttpError(400,"Invalid email or password"));
+        }
+        const accessToken = jwt.sign({_id:isUserPresent._id},config.accessTokenSecret,{
+            expiresIn:'2d'
+        })
+
+        res.cookie("accessToken",accessToken,{
+             httpOnly: true,
+            secure: true,
+            sameSite: "lax",
+            maxAge: 24 * 60 * 60 * 1000
+        })
+
+        return res.status(200).json({
+            success:true,
+            message:"Logged In",
+            data:isUserPresent
+        })
+    }
+    catch(error){
+       return next(error)
+    }
+
+
+
+
+
+
 }
 
 module.exports ={Register,Login}
