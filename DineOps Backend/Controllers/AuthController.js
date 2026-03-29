@@ -42,7 +42,9 @@ async function Register(req,res,next){
 }
 
 async function Login(req,res,next){
+    const {email,password} = req.body;
 
+    
 }
 
 module.exports ={Register,Login}
