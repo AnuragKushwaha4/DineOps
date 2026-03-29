@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const config = require("../Configs/Config")
 
-
 async function Register(req,res,next){
     try{
 
@@ -56,7 +55,7 @@ async function Login(req,res,next){
             return next(createHttpError(400,"Invalid email or password"));
         }
 
-        const isValid = bcrypt.compare(password,isUserPresent.password);
+        const isValid =await bcrypt.compare(password,isUserPresent.password);
         if(!isValid){
             return next(createHttpError(400,"Invalid email or password"));
         }
@@ -83,9 +82,18 @@ async function Login(req,res,next){
 
 
 
+async function GetUserData(req,res,next){
+    try{
+        const user = await usermodel.findById({_id:req.user._id})
+        return res.status(200).json({success:true,message:"User found",data:user})
+    }
+    catch(error){
+        return next(error)
+    }
 
+}
 
 
 }
 
-module.exports ={Register,Login}
+module.exports ={Register,Login,GetUserData}

@@ -1,9 +1,14 @@
 const config = require("./Configs/Config")
-
+const cookieParser = require("cookie-parser")
 
 const express = require("express")
 const ConnectDB = require("./Configs/Connection")
 const GlobalErrorHandler = require("./Middlewares/ErrorHandler")
+
+
+
+
+
 const AuthRoute = require("./Routes/AuthRoutes")
 
 
@@ -13,6 +18,8 @@ const app = express()
 ConnectDB()
 const PORT = config.port;
 
+
+app.use(cookieParser())
 app.use(express.json())
 app.use("/api/auth",AuthRoute)
 
