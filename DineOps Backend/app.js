@@ -10,6 +10,7 @@ const GlobalErrorHandler = require("./Middlewares/ErrorHandler")
 
 
 const AuthRoute = require("./Routes/AuthRoutes")
+const OrderRoute = require("./Routes/OrderRoutes")
 
 
 
@@ -22,6 +23,7 @@ const PORT = config.port;
 app.use(cookieParser())
 app.use(express.json())
 app.use("/api/auth",AuthRoute)
+app.use("/api/order",OrderRoute)
 
 
 

@@ -51,16 +51,27 @@ async function getOrderByID(req,res,next){
 async function UpdateOrder(req,res,next){
     try{
 
-        const status = req.body;
+        const {orderStatus} = req.body;
 
-        if(!status)next(createHttpError(400,{message:"status not found"}))
-        
-        const updatedrecord = await OrdersModel.findOneAndUpdate({_id:req.params.id},{status:status},{new:true})
-        if(!updatedrecord)return next(createHttpError(400,{message:"Order Not found"}))
-        updatedrecord.save()
+        if(!orderStatus){
+            return next(createHttpError(400,"status not found"))
+        }
 
-        res.status(200).json({success:true,message:"Order Updated",data:updatedrecord})
+        const updatedrecord = await OrdersModel.findOneAndUpdate(
+            {_id:req.params.id},
+            {orderStatus:orderStatus},
+            {new:true}
+        );
 
+        if(!updatedrecord){
+            return next(createHttpError(400,"Order Not found"))
+        }
+
+        res.status(200).json({
+            success:true,
+            message:"Order Updated",
+            data:updatedrecord
+        })
 
     }catch(error){
         next(error)
