@@ -19,7 +19,8 @@ const OrderSchema = new mongoose.Schema({
         tax:{type:Number,required:true},
         totalwithTax:{type:Number,required:true}
     },
-    items:[]
+    items:[],
+    table:{type:mongoose.Schema.Types.ObjectId,ref:"Tables"}
 },{timestamps:true})
 
 
