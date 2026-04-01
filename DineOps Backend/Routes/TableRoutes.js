@@ -7,6 +7,6 @@ const router = express.Router()
 
 router.post("/",IsUserAuthorised,AddTable);
 router.get("/",IsUserAuthorised,GetTables)
-app.put("/:id",IsUserAuthorised,UpdateTable)
+router.put("/:id",IsUserAuthorised,UpdateTable)
 
 module.exports = router;

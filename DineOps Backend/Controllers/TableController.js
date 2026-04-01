@@ -25,8 +25,8 @@ async function AddTable(req,res,next) {
 async function GetTables(req,res,next) {
     try{
 
-        const Tables = await TableModel.findOne();
-        res.status(200).status({success:true,message:"All the Tables sent",data:Tables})
+        const Tables = await TableModel.find();
+        res.status(200).json({success:true,message:"All the Tables sent",data:Tables})
     }catch(error){
         next(error)
     }
@@ -45,7 +45,7 @@ async function UpdateTable(req,res,next) {
             {new:true}
         )
 
-        if(Table)return next(createHttpError(400,"Table not found"))
+        if(!Table)return next(createHttpError(400,"Table not found"))
 
         res.status(200).json({success:true,message:"Table updated",data:Table})
 
