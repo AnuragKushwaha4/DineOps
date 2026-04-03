@@ -1,5 +1,6 @@
 🍽️ DineOps – Restaurant Management System
 
+
 DineOps is a full-stack restaurant management system designed to streamline restaurant operations such as table management, order handling, and user authentication.
 The system provides role-based access for Admins, Staff, and Customers, enabling efficient order tracking and table allocation.
 
