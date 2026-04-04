@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+
   const navigate = useNavigate();
+
+  function handleChange(e){
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  }
 
   function handleSignup(e){
     e.preventDefault();
     navigate("/auth/register");
   }
 
+  function handleSubmit(e){
+    e.preventDefault()
+    console.log(formData)
+  }
   return (
 
     <div className="bg-white shadow-2xl rounded-2xl p-12 w-full max-w-xl border border-blue-100">
@@ -18,13 +34,16 @@ const Login = () => {
         Sign In
       </h1>
 
-      <form className="flex flex-col gap-5">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
 
         {/* Email */}
         <div className="flex flex-col">
           <label className="text-sm mb-1 text-gray-600">Email</label>
           <input
             type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             placeholder="Enter your email"
             className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
@@ -35,6 +54,9 @@ const Login = () => {
           <label className="text-sm mb-1 text-gray-600">Password</label>
           <input
             type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             placeholder="Enter password"
             className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
@@ -55,7 +77,6 @@ const Login = () => {
 
       </form>
 
-      {/* Signup redirect */}
       <p className="text-sm text-center mt-6 text-gray-600">
         Don't have an account?
       </p>
@@ -68,7 +89,6 @@ const Login = () => {
       </button>
 
     </div>
-
   );
 };
 
