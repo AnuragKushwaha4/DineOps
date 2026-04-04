@@ -19,10 +19,6 @@ function App() {
           element: <Home />
         },
         {
-          path: "/auth",
-          element: <Auth />
-        },
-        {
           path: "/order",
           element: <Order />
         },
@@ -35,7 +31,11 @@ function App() {
           element:<Menu/>
         }
       ]
-    }
+    },
+      {
+          path: "/auth",
+          element: <Auth />
+      }
   ]);
 
   return <RouterProvider router={router} />;
