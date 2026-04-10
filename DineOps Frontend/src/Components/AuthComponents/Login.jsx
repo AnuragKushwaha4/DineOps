@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {useMutation} from "@tanstack/react-query"
+import {login} from "../../Https/index"
+import {enqueueSnackbar} from "notistack"
+import { useDispatch } from "react-redux";
+import { setUser } from "../../Redux/Slice/UserSlice";
 
 const Login = () => {
 
@@ -8,6 +13,7 @@ const Login = () => {
     password: ""
   });
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function handleChange(e){
@@ -22,10 +28,27 @@ const Login = () => {
     navigate("/auth/register");
   }
 
+  const loginMutation = useMutation({
+    mutationFn:(reqData)=>login(reqData),
+    onSuccess:(res)=>{
+      const {data}=res;
+      console.log(data)
+      const {_id,name,email,phone,role}=data.data;
+      dispatch(setUser(_id,name,email,phone,role))
+      navigate("/")
+    },
+    onError:(error)=>{
+      const {response}=error;
+      enqueueSnackbar(response.data.message,{variant:"error"})
+    }
+  })
+
+
   function handleSubmit(e){
-    e.preventDefault()
-    console.log(formData)
-  }
+  e.preventDefault()
+
+  loginMutation.mutate(formData)
+}
   return (
 
     <div className="bg-white shadow-2xl rounded-2xl p-12 w-full max-w-xl border border-blue-100">
