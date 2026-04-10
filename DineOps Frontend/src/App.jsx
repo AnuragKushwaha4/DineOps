@@ -11,8 +11,12 @@ import Register from "./Components/AuthComponents/Register.jsx";
 import ProtectedRoute from "./Components/ProtectedRoute.jsx";
 
 
+
 function App() {
 
+
+ 
+ 
   const router = createBrowserRouter([
     {
       path: "/",
