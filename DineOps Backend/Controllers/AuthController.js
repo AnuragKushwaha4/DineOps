@@ -93,4 +93,15 @@ async function GetUserData(req,res,next){
 
 }
 
-module.exports ={Register,Login,GetUserData}
+function Logout(req,res,next){
+    try{
+
+        res.clearCookie("accessToken")
+        res.status(200).json({success:true,message:"loggedOut successfully"})
+    }
+    catch(error){
+         return next(error)
+    }
+}
+
+module.exports ={Register,Login,GetUserData,Logout}
