@@ -3,8 +3,10 @@ import WelcomeBanner from './HomeComponents/WelcomeBanner'
 import RecentOrders from './HomeComponents/RecentOrders'
 import InfoDashboard from './HomeComponents/InfoDashboard'
 import PopularDishes from './HomeComponents/PopularDishes'
+import { useSelector } from 'react-redux'
 
 const Home = () => {
+  const userData = useSelector(state=>state.user)
   return (
     <section className="flex w-full min-h-[calc(100vh-80px)] bg-blue-50">
 

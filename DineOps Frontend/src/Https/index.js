@@ -15,5 +15,6 @@ const api = axios.create({
 const login = (data)=> api.post("/auth/login",data);
 const register =(data)=>api.post("/auth/register",data);
 const getData =()=>api.get("/auth")
+const logout =()=>api.post("/auth/logout")
 
-export {login,register,getData}
+export {login,register,getData,logout}

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 
 const WelcomeBanner = () => {
 
+  const userData = useSelector(state=>state.user)
   const [currenttime, setcurrenttime] = useState(new Date());
 
+  
   useEffect(() => {
     const timer = setInterval(() => {
       setcurrenttime(new Date())
@@ -25,7 +28,7 @@ const WelcomeBanner = () => {
       {/* Name Section */}
       <div>
         <h1 className="text-2xl font-semibold text-gray-800">
-          Anurag Kushwaha
+          {userData.name}
         </h1>
 
         <p className="text-gray-500 text-sm mt-1 max-w-md">
