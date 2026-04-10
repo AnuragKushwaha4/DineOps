@@ -1,6 +1,6 @@
 const config = require("./Configs/Config")
 const cookieParser = require("cookie-parser")
-
+const CORS = require("cors")
 const express = require("express")
 const ConnectDB = require("./Configs/Connection")
 const GlobalErrorHandler = require("./Middlewares/ErrorHandler")
@@ -23,6 +23,9 @@ const PORT = config.port;
 
 app.use(cookieParser())
 app.use(express.json())
+app.use(CORS());
+
+
 app.use("/api/auth",AuthRoute)
 app.use("/api/order",OrderRoute)
 app.use("/api/table",TableRoute)
