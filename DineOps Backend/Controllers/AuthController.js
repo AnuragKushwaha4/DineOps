@@ -48,14 +48,13 @@ async function Register(req,res,next){
 
 async function Login(req,res,next){
     try{
+        console.log("req body",req.body)
         const {email,password}= req.body;
-
         const isUserPresent = await usermodel.findOne({email:email})
-
         if(!isUserPresent){
             return next(createHttpError(400,"Invalid email or password"));
         }
-
+       
         const isValid =await bcrypt.compare(password,isUserPresent.password);
         if(!isValid){
             return next(createHttpError(400,"Invalid email or password"));
@@ -66,11 +65,10 @@ async function Login(req,res,next){
 
         res.cookie("accessToken",accessToken,{
              httpOnly: true,
-            secure: true,
+            secure: false,
             sameSite: "lax",
             maxAge: 24 * 60 * 60 * 1000
         })
-
         return res.status(200).json({
             success:true,
             message:"Logged In",
@@ -78,6 +76,7 @@ async function Login(req,res,next){
         })
     }
     catch(error){
+      
        return next(error)
     }
 

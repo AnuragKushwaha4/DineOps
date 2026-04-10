@@ -23,7 +23,10 @@ const PORT = config.port;
 
 app.use(cookieParser())
 app.use(express.json())
-app.use(CORS());
+app.use(CORS({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
 
 
 app.use("/api/auth",AuthRoute)
