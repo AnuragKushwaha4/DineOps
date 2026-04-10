@@ -8,13 +8,17 @@ import Layout from "../src/Components/Layout.jsx";
 import Menu from "./Components/Menu.jsx"
 import Login from "./Components/AuthComponents/Login.jsx";
 import Register from "./Components/AuthComponents/Register.jsx";
+import ProtectedRoute from "./Components/ProtectedRoute.jsx";
+
 
 function App() {
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Layout />,  
+      element: <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>,  
       children: [
         {
           path: "/",
