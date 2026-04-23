@@ -17,7 +17,6 @@ const ProtectedRoute = ({ children }) => {
       try {
 
         const res = await getData()
-        console.log(res.data)
         dispatch(setUser(res.data.data))   // store user in redux
 
       } catch (err) {

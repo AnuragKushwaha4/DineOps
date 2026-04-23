@@ -13,7 +13,6 @@ const Header = () => {
   const userData = useSelector(state=>state.user)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(userData)
   const logoutMutation = useMutation({
     mutationFn:()=>logout(),
     onSuccess:(data)=>{
