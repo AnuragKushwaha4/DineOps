@@ -8,6 +8,7 @@ import {useMutation} from "@tanstack/react-query"
 import {logout} from "../../Https/index"
 import { removeUser } from '../../Redux/Slice/UserSlice';
 import { useNavigate } from 'react-router-dom';
+import { MdDashboard } from "react-icons/md";
 
 const Header = () => {
   const userData = useSelector(state=>state.user)
@@ -54,7 +55,14 @@ const Header = () => {
 
       {/* Right Section */}
       <div className="flex items-center gap-5">
-
+        {userData.role === "admin" && (
+  <button
+    onClick={() => navigate("/admin/dashboard")}
+    className="flex items-center justify-center p-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition"
+  >
+    <MdDashboard className="text-lg" />
+  </button>
+)}
         {/* Notification */}
         <IoNotificationsOutline className="text-2xl text-blue-500 cursor-pointer hover:text-blue-600 transition"/>
 

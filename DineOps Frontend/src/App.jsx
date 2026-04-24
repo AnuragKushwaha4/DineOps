@@ -9,7 +9,8 @@ import Menu from "./Components/Menu.jsx"
 import Login from "./Components/AuthComponents/Login.jsx";
 import Register from "./Components/AuthComponents/Register.jsx";
 import ProtectedRoute from "./Components/ProtectedRoute.jsx";
-
+import AdminDashboard from "./Components/AdminDashboard.jsx"
+import ProtectedAdmin from "./Components/AdminComponents/ProtectedAdmin.jsx";
 
 
 function App() {
@@ -39,6 +40,12 @@ function App() {
         {
           path:"menu",
           element:<Menu/>
+        },
+        {
+          path:"admin",
+          element:<ProtectedAdmin>
+            <AdminDashboard/>
+          </ProtectedAdmin>
         }
       ]
     },
