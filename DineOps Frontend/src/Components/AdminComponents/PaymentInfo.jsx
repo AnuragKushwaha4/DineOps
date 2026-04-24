@@ -3,7 +3,7 @@ import React from 'react'
 const PaymentInfo = () => {
   return (
     <div>
-      Payments Info
+      Payments Info is coming soon
     </div>
   )
 }

@@ -57,7 +57,7 @@ const Header = () => {
       <div className="flex items-center gap-5">
         {userData.role === "admin" && (
   <button
-    onClick={() => navigate("/admin/dashboard")}
+    onClick={() => navigate("/admin")}
     className="flex items-center justify-center p-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition"
   >
     <MdDashboard className="text-lg" />
