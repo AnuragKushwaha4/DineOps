@@ -11,15 +11,17 @@ import {
 import FinanceInfo from "./AdminComponents/FinanceInfo"
 import OrderInfo from "./AdminComponents/OrderInfo"
 import PaymentInfo from "./AdminComponents/PaymentInfo"
+import TableCreation from "./AdminComponents/TableCreation";
 
 const AdminDashboard = () => {
 
   const [activeTab, setActiveTab] = useState("finances");
+  const [isTableCreation,setTableCreation] = useState(false)
 
   /* ---------------- ACTION HANDLERS ---------------- */
 
   function handleAddTable() {
-    console.log("Add Table clicked");
+    setTableCreation(true)
   }
 
   function handleAddCategory() {
@@ -125,6 +127,14 @@ const AdminDashboard = () => {
         {renderContent()}
       </div>
 
+    {isTableCreation && (
+  <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
+    <TableCreation
+      isTableCreation={isTableCreation}
+      setTableCreation={setTableCreation}
+    />
+  </div>
+)}
     </div>
   );
 };
