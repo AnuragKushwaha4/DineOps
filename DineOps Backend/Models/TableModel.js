@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const TableSchema = new mongoose.Schema({
     tableNo:{type:Number, required:true, unique:true},
     tableStatus:{type:String,default:"Available"},
+    seats:{type:Number, required:true},
     orderDetails:{type:mongoose.Schema.Types.ObjectId,ref:"Orders"}
 
 })
