@@ -12,6 +12,7 @@ const TableCreation = ({ isTableCreation, setTableCreation }) => {
   const [formData,setformData]= useState({
     tableNo:"",
     seats:"",
+    tableName:"",
   })
 
   function handleChange(e){
@@ -25,13 +26,13 @@ const TableCreation = ({ isTableCreation, setTableCreation }) => {
     onSuccess:(res)=>{
       const {data}=res;
       enqueueSnackbar(data.message,{variant:"success"})
-      setformData({tableNo:"",seats:""})
+      setformData({tableNo:"",seats:"",tableName:""})
 
     },
     onError:(error)=>{
       const {response}=error;
       enqueueSnackbar(response.data.message,{variant:"error"})
-      setformData({tableNo:"",seats:""})
+       setformData({tableNo:"",seats:"",tableName:""})
     }
   })
 
@@ -92,6 +93,24 @@ const TableCreation = ({ isTableCreation, setTableCreation }) => {
             className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
+        {/* Table Category */}
+<div className="flex flex-col">
+  <label className="text-sm text-gray-500 mb-1">
+    Table Category
+  </label>
+
+  <select
+    name="tableName"
+    value={formData.tableName}
+    onChange={handleChange}
+    className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+  >
+    <option  disabled hidden value="">Select table category</option>
+    <option value="Couple Table">Couple Table</option>
+    <option value="Family Table">Family Table</option>
+    <option value="Party Table">Party Table</option>
+  </select>
+</div>
 
         {/* Buttons */}
         <div className="flex justify-end gap-3 pt-3">
