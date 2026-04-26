@@ -5,7 +5,7 @@ const TableModel = require("../Models/TableModel");
 async function AddTable(req,res,next) {
     try{
 
-        const {tableNo,seats}= req.body;
+        const {tableNo,seats,tableName}= req.body;
 
         if(!tableNo)return next(createHttpError(400,"Table number is not provided"))
 
@@ -13,7 +13,7 @@ async function AddTable(req,res,next) {
 
         if(isTablePresent)return next(createHttpError(400,"Table Already Exist"))
 
-        const NewTable = await TableModel.create({tableNo:tableNo,seats:seats})
+        const NewTable = await TableModel.create({tableNo:tableNo,seats:seats,tableName:tableName})
 
         res.status(200).json({success:true,message:"New Table created",data:NewTable})
 

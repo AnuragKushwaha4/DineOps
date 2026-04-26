@@ -3,18 +3,34 @@ import { tables } from "../../Constants/Constants";
 import {useNavigate} from "react-router-dom" 
 import { useDispatch, useSelector } from "react-redux";
 import { setTableNumber } from "../../Redux/Slice/CustomerSlice";
-
-
+import { useQuery} from "@tanstack/react-query"
+import { GetTables } from "../../Https/index";
+import {enqueueSnackbar} from "notistack"
 const TablesStatus = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const customerInfo = useSelector(state=>state.customer)
+
+
+
   function handleOrderCreation(table){
     if(table.status!="Booked" && customerInfo.customerName!="" && customerInfo.customerPhone!=""){
       dispatch(setTableNumber({table:table.id}))
       navigate("/menu")
     }
   }
+
+  const {data : tableData , isError }=useQuery({
+      queryKey:["tables"],
+      queryFn:async ()=>{
+        return await GetTables();
+      }
+  })
+
+  console.log(tableData?.data.data)
+  if(isError)enqueueSnackbar("Something went wrong",{variant:"error"})
+
+
   return (
     <div className="flex flex-wrap gap-8 p-8 bg-blue-50 min-h-screen">
       {tables.map((table) => {

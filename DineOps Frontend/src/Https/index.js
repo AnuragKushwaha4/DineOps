@@ -22,6 +22,6 @@ const logout =()=>api.post("/auth/logout")
 //Table HandleAPI endpoints:
 
 const addTable = (data)=>api.post("/table",data)
+const GetTables =()=>api.get("/table")
 
-
-export {login,register,getData,logout,addTable}
+export {login,register,getData,logout,addTable,GetTables}
