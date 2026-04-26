@@ -5,9 +5,18 @@ const TableCreation = ({ isTableCreation, setTableCreation }) => {
 
   if (isTableCreation === false) return null;
 
+  const [formData,setformData]= useState({
+    tableNo:"",
+    seats:"",
+  })
+
+  function handleChange(e){
+    const {name,value}=e.target;
+    setformData({...formData,[name]:value})
+  }
   function handleSubmit(e) {
     e.preventDefault();
-    // logic for table creation
+    console.log(formData)
     setTableCreation(false);
   }
 
@@ -38,6 +47,8 @@ const TableCreation = ({ isTableCreation, setTableCreation }) => {
 
           <input
             type="number"
+            name="tableNo"
+            value={formData.tableNo}
             placeholder="Enter table number"
             className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
@@ -51,6 +62,8 @@ const TableCreation = ({ isTableCreation, setTableCreation }) => {
 
           <input
             type="number"
+            name="seats"
+            value={formData.seats}
             placeholder="Enter guest capacity"
             className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
