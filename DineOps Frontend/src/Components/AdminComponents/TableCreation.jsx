@@ -1,6 +1,9 @@
 import React from "react";
 import { FiX } from "react-icons/fi";
 import { useState } from "react";
+import { Mutation, useMutation } from "@tanstack/react-query";
+import { addTable } from "../../Https/index";
+import {enqueueSnackbar} from "notistack"
 
 const TableCreation = ({ isTableCreation, setTableCreation }) => {
 
@@ -15,9 +18,27 @@ const TableCreation = ({ isTableCreation, setTableCreation }) => {
     const {name,value}=e.target;
     setformData({...formData,[name]:value})
   }
+
+
+  const TableMutation = useMutation({
+    mutationFn:(reqData)=>addTable(reqData),
+    onSuccess:(res)=>{
+      const {data}=res;
+      enqueueSnackbar(data.message,{variant:"success"})
+      setformData({tableNo:"",seats:""})
+
+    },
+    onError:(error)=>{
+      const {response}=error;
+      enqueueSnackbar(response.data.message,{variant:"error"})
+      setformData({tableNo:"",seats:""})
+    }
+  })
+
+
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(formData)
+    TableMutation.mutate(formData)
     setTableCreation(false);
   }
 
