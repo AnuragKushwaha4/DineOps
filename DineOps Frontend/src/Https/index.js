@@ -10,11 +10,18 @@ const api = axios.create({
 })
 
 
-// API login end points:
+// Auth APIs end points:
+
+
 
 const login = (data)=> api.post("/auth/login",data);
 const register =(data)=>api.post("/auth/register",data);
 const getData =()=>api.get("/auth")
 const logout =()=>api.post("/auth/logout")
 
-export {login,register,getData,logout}
+//Table HandleAPI endpoints:
+
+const addTable = (data)=>api.post("/table",data)
+
+
+export {login,register,getData,logout,addTable}

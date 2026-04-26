@@ -1,5 +1,6 @@
 import React from "react";
 import { FiX } from "react-icons/fi";
+import { useState } from "react";
 
 const TableCreation = ({ isTableCreation, setTableCreation }) => {
 
@@ -49,6 +50,7 @@ const TableCreation = ({ isTableCreation, setTableCreation }) => {
             type="number"
             name="tableNo"
             value={formData.tableNo}
+            onChange={handleChange}
             placeholder="Enter table number"
             className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
@@ -64,6 +66,7 @@ const TableCreation = ({ isTableCreation, setTableCreation }) => {
             type="number"
             name="seats"
             value={formData.seats}
+            onChange={handleChange}
             placeholder="Enter guest capacity"
             className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
