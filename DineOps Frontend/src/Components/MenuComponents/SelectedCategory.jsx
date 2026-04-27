@@ -32,7 +32,7 @@ const SelectedCategory = ({ selectedCategory }) => {
   }
 
   return (
-    <div className="flex flex-col gap-4 pr-4 overflow-y-auto max-h-[80vh]">
+    <div className="flex flex-col gap-4 pr-4 overflow-y-auto max-h-[80vh] pb-24">
 
       {selectedCategory.items.map((info, index) => {
         const count = counts[index] || 0;

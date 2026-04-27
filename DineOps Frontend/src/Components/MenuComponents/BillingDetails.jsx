@@ -9,7 +9,7 @@ const BillingDetails = () => {
   const grandTotal = total + tax;
 
   return (
-    <div className="flex flex-col gap-5 bg-white rounded-xl shadow-md p-4 h-full">
+    <div className="flex flex-col gap-5 bg-white rounded-xl shadow-md p-4 h-full pb-14">
 
       {/* Price Section */}
       <div className="flex flex-col gap-2 text-sm">
