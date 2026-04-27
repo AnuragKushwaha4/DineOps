@@ -4,16 +4,15 @@ import { getTotal } from "../../Redux/Slice/MenuCartSlice";
 
 const BillingDetails = () => {
 
-  const total = useSelector(getTotal)
-  const tax = total*0.05;
-  const grandTotal = total+tax
+  const total = useSelector(getTotal);
+  const tax = total * 0.05;
+  const grandTotal = total + tax;
 
   return (
-    <div className="flex flex-col gap-5 bg-white rounded-xl shadow-md p-4">
+    <div className="flex flex-col gap-5 bg-white rounded-xl shadow-md p-4 h-full">
 
       {/* Price Section */}
       <div className="flex flex-col gap-2 text-sm">
-
         <div className="flex justify-between text-gray-600">
           <p>Price</p>
           <p>₹{total}</p>
@@ -21,14 +20,13 @@ const BillingDetails = () => {
 
         <div className="flex justify-between text-gray-600">
           <p>Tax</p>
-          <p>₹{tax}</p>
+          <p>₹{tax.toFixed(2)}</p>
         </div>
 
         <div className="border-t pt-2 flex justify-between font-semibold text-gray-800">
           <p>Total</p>
-          <p>₹{grandTotal}</p>
+          <p>₹{grandTotal.toFixed(2)}</p>
         </div>
-
       </div>
 
       {/* Payment */}
@@ -47,7 +45,7 @@ const BillingDetails = () => {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 mt-auto">
 
         <button className="w-full py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition">
           Print Receipt
