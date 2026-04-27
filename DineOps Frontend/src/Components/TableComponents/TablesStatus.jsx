@@ -1,5 +1,4 @@
 import React from "react";
-import { tables } from "../../Constants/Constants";
 import {useNavigate} from "react-router-dom" 
 import { useDispatch, useSelector } from "react-redux";
 import { setTableNumber } from "../../Redux/Slice/CustomerSlice";
@@ -33,7 +32,7 @@ const TablesStatus = () => {
 
   return (
     <div className="flex flex-wrap gap-8 p-8 bg-blue-50 min-h-screen">
-      {tables.map((table) => {
+      {tableData?.data.data.map((table) => {
         const statusStyle =
           table.status === "Booked"
             ? "bg-red-100 text-red-600"
@@ -44,26 +43,26 @@ const TablesStatus = () => {
         return (
           <div
             onClick={()=>{handleOrderCreation(table)}}
-            key={table.id}
+            key={table._id}
             className="w-72 h-44 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 flex flex-col justify-between border border-blue-100"
           >
             {/* Top Row */}
             <div className="flex justify-between items-center">
               <p className="text-sm text-gray-500 font-medium">
-                Table {table.id}
+                Table {table.tableNo}
               </p>
 
               <span
                 className={`text-xs px-3 py-1 rounded-full font-medium ${statusStyle}`}
               >
-                {table.status}
+                {table.tableStatus}
               </span>
             </div>
 
             {/* Customer */}
             <div>
               <h1 className="text-xl font-semibold text-gray-800">
-                {table.name || "No Customer"}
+                {table.tableName || "No Customer"}
               </h1>
             </div>
 
