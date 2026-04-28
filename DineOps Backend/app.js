@@ -12,7 +12,7 @@ const GlobalErrorHandler = require("./Middlewares/ErrorHandler")
 const AuthRoute = require("./Routes/AuthRoutes")
 const OrderRoute = require("./Routes/OrderRoutes")
 const TableRoute = require("./Routes/TableRoutes")
-
+const PaymentRoute = require("./Routes/PaymentRoutes")
 
 
 const app = express()
@@ -32,7 +32,7 @@ app.use(CORS({
 app.use("/api/auth",AuthRoute)
 app.use("/api/order",OrderRoute)
 app.use("/api/table",TableRoute)
-
+app.use("/api/payment",PaymentRoute)
 
 
 app.get("/",(req,res)=>{
