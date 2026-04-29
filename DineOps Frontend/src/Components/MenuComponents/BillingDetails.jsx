@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { getTotal } from "../../Redux/Slice/MenuCartSlice";
 import { enqueueSnackbar } from "notistack";
-import { createOrder } from "../../Https/index";
+import { createOrder, verifyPayment } from "../../Https/index";
 import {useNavigate} from "react-router-dom"
 
 
@@ -66,14 +66,26 @@ const BillingDetails = () => {
         description: "Secure Payment for Your Meal",
         order_id: data.order.id,
 
-        handler: function (response) {
-          console.log("Payment Response:", response);
+        handler: async function (response) {
 
-          enqueueSnackbar("Payment Successful!", {
-            variant: "success",
-          });
+                  try {
 
-          // Later you will call verify API here
+                    const verification = await verifyPayment(response);
+
+                    console.log(verification.data);
+
+                    if (verification.data.success) {
+                      enqueueSnackbar(verification.data.message, { variant: "success" });
+                      // navigate("/")
+                    } else {
+                      enqueueSnackbar("Payment verification failed", { variant: "error" });
+                    }
+
+                  } catch (error) {
+                    console.log(error);
+                    enqueueSnackbar("Payment verification failed", { variant: "error" });
+                  }
+
         },
 
         prefill: {
