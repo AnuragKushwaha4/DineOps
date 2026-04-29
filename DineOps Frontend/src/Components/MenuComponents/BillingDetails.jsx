@@ -36,7 +36,7 @@ const BillingDetails = () => {
     // CASH PAYMENT
     if (paymentMethod === "CASH") {
       enqueueSnackbar("Order Placed (Cash)", { variant: "success" });
-      navigate("/")
+      //navigate("/")
       return;
     }
 
@@ -48,7 +48,7 @@ const BillingDetails = () => {
 
       if (!res) {
         enqueueSnackbar("Razorpay SDK failed to load", { variant: "error" });
-        navigate("/")
+        //navigate("/")
         return;
       }
 
