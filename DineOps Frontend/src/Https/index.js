@@ -28,4 +28,6 @@ const GetTables =()=>api.get("/table")
 //Payment Handling APIs endpoints:
 
 const createOrder =(data)=>api.post("/payment/createOrder",data)
-export {login,register,getData,logout,addTable,GetTables,createOrder}
+const verifyPayment =(data)=>api.post("/payment/verifyPayment",data)
+
+export {login,register,getData,logout,addTable,GetTables,createOrder,verifyPayment}
