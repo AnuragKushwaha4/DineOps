@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { getTotal } from "../../Redux/Slice/MenuCartSlice";
 import { enqueueSnackbar } from "notistack";
 import { createOrder } from "../../Https/index";
+import {useNavigate} from "react-router-dom"
+
 
 const loadScript = (src) => {
   return new Promise((resolve) => {
@@ -19,7 +21,7 @@ const loadScript = (src) => {
 const BillingDetails = () => {
   const customerData = useSelector((state) => state.customer);
   const total = useSelector(getTotal);
-
+  const navigate = useNavigate();
   const tax = total * 0.05;
   const grandTotal = total + tax;
 
@@ -34,6 +36,7 @@ const BillingDetails = () => {
     // CASH PAYMENT
     if (paymentMethod === "CASH") {
       enqueueSnackbar("Order Placed (Cash)", { variant: "success" });
+      navigate("/")
       return;
     }
 
@@ -45,11 +48,12 @@ const BillingDetails = () => {
 
       if (!res) {
         enqueueSnackbar("Razorpay SDK failed to load", { variant: "error" });
+        navigate("/")
         return;
       }
 
       const reqData = {
-        amount: Math.round(grandTotal * 100), // convert to paise
+        amount: Math.round(grandTotal),
       };
 
       const { data } = await createOrder(reqData);
