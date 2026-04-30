@@ -64,8 +64,9 @@ async function verifyPayment(req, res, next) {
 
 async function updatePaymentRecord(req,res,next){
   try {
-    const {paymentId,orderId,amount,currency,status,method,email,contact,createdAt} = req.body;
-    await PaymentModel.create({paymentId,orderId,amount,currency,status,method,email,contact,createdAt})
+    const {paymentId,orderId,amount,currency,status,method,contact,createdAt} = req.body;
+    const newPayment = await PaymentModel.create({paymentId,orderId,amount,currency,status,method,contact,createdAt})
+    res.status(200).json({success:true,data:newPayment})
   } catch (error) {
     next(error)
   }

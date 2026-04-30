@@ -7,7 +7,6 @@ const PaymentSchema =new  mongoose.Schema({
     currency:String,
     status:String,
     method:String,
-    email:String,
     contact:String,
     createdAt:Date
 })

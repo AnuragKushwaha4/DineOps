@@ -27,9 +27,6 @@ const BillingDetails = () => {
   const total = useSelector(getTotal);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  useEffect(()=>{
-    console.log(customerData)
-  },[customerData])
   const tax = total * 0.05;
   const grandTotal = total + tax;
 
@@ -84,6 +81,7 @@ const BillingDetails = () => {
                     console.log(verification.data);
 
                     if (verification.data.success) {
+
                       enqueueSnackbar(verification.data.message, { variant: "success" });
                       dispatch(deleteCustomer())
                       navigate("/")
