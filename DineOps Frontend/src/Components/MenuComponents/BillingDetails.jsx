@@ -71,7 +71,7 @@ const BillingDetails = () => {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: data.order.amount,
         currency: data.order.currency,
-        name: "RESTRO",
+        name: "DINEOPs",
         description: "Secure Payment for Your Meal",
         order_id: data.order.id,
 

@@ -1,6 +1,8 @@
 const Razorpay = require("razorpay")
 const config = require("../Configs/Config")
 const crypto = require("crypto")
+const PaymentModel = require("../Models/PaymentModel")
+
 async function createOrder(req,res,next){
     try{
         var instance = new Razorpay({ key_id: config.testapikey , key_secret: config.testsecretkey })
@@ -57,4 +59,15 @@ async function verifyPayment(req, res, next) {
     next(error);
   }
 }
-module.exports = {createOrder,verifyPayment}
+
+
+
+async function updatePaymentRecord(req,res,next){
+  try {
+    const {paymentId,orderId,amount,currency,status,method,email,contact,createdAt} = req.body;
+    await PaymentModel.create({paymentId,orderId,amount,currency,status,method,email,contact,createdAt})
+  } catch (error) {
+    next(error)
+  }
+}
+module.exports = {createOrder,verifyPayment,updatePaymentRecord}

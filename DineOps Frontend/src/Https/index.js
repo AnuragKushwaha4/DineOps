@@ -29,5 +29,5 @@ const GetTables =()=>api.get("/table")
 
 const createOrder =(data)=>api.post("/payment/createOrder",data)
 const verifyPayment =(data)=>api.post("/payment/verifyPayment",data)
-
-export {login,register,getData,logout,addTable,GetTables,createOrder,verifyPayment}
+const updatePayments =(data)=>api.post("/payment/updatePayment")
+export {login,register,getData,logout,addTable,GetTables,createOrder,verifyPayment,updatePayments}
