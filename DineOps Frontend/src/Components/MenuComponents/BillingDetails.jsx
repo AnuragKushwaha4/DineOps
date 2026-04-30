@@ -6,7 +6,7 @@ import { createOrder, verifyPayment } from "../../Https/index";
 import {useNavigate} from "react-router-dom"
 import {deleteCustomer} from "../../Redux/Slice/CustomerSlice"
 import { useEffect } from "react";
-
+import {updatePayments} from "../../Https/index"
 const loadScript = (src) => {
   return new Promise((resolve) => {
     const script = document.createElement("script");
@@ -51,7 +51,7 @@ const BillingDetails = () => {
           contact: customerData.customerPhone
         };
 
-        await updatePayment(paymentData);
+        await updatePayments(paymentData);
       enqueueSnackbar("Order Placed (Cash)", { variant: "success" });
       dispatch(deleteCustomer())
       navigate("/")
@@ -104,7 +104,7 @@ const BillingDetails = () => {
                           contact: customerData.customerPhone
                         };
 
-                        await updatePayment(paymentData);
+                        await updatePayments(paymentData);
 
                       enqueueSnackbar(verification.data.message, { variant: "success" });
                       dispatch(deleteCustomer())

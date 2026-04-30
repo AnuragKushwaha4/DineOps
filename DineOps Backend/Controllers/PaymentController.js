@@ -64,10 +64,14 @@ async function verifyPayment(req, res, next) {
 
 async function updatePaymentRecord(req,res,next){
   try {
+    console.log("Backend try")
     const {paymentId,orderId,amount,currency,status,method,contact} = req.body;
+    console.log("Backend")
     const newPayment = await PaymentModel.create({paymentId,orderId,amount,currency,status,method,contact,createdAt:new Date()})
     res.status(200).json({success:true,data:newPayment})
   } catch (error) {
+    console.log("Backend error")
+    console.log(error)
     next(error)
   }
 }
