@@ -15,7 +15,7 @@ const NavigationBar = () => {
   const [isOrderCreation, setOrderCreation] = useState(false);
   const [liveTab,setLiveTab]=useState("/")
   const [name,setname]=useState("")
-  const [phone,setphone]=useState()
+  const [phone,setphone]=useState("")
   const [customercount,setcustomercount] = useState();
   const dispatch = useDispatch();
 
@@ -39,6 +39,9 @@ const NavigationBar = () => {
 
   function handleCreateOrder(){
     dispatch(createCustomer({name,phone,customercount}))
+    setname("")
+    setphone("")
+    setcustomercount()
     navigate("/tables")
     setOrderCreation(false)
   }

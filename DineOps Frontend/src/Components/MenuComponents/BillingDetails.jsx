@@ -5,6 +5,7 @@ import { enqueueSnackbar } from "notistack";
 import { createOrder, verifyPayment } from "../../Https/index";
 import {useNavigate} from "react-router-dom"
 import {deleteCustomer} from "../../Redux/Slice/CustomerSlice"
+import { useEffect } from "react";
 
 const loadScript = (src) => {
   return new Promise((resolve) => {
@@ -26,8 +27,9 @@ const BillingDetails = () => {
   const total = useSelector(getTotal);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-
+  useEffect(()=>{
+    console.log(customerData)
+  },[customerData])
   const tax = total * 0.05;
   const grandTotal = total + tax;
 
