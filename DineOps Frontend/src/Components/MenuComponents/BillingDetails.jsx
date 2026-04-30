@@ -38,8 +38,20 @@ const BillingDetails = () => {
       return;
     }
 
-    // CASH PAYMENT
+    
     if (paymentMethod === "CASH") {
+
+       const paymentData = {
+          paymentId: null,
+          orderId: customerData.orderID,
+          amount: grandTotal,
+          currency: "INR",
+          status: "success",
+          method: "CASH",
+          contact: customerData.customerPhone
+        };
+
+        await updatePayment(paymentData);
       enqueueSnackbar("Order Placed (Cash)", { variant: "success" });
       dispatch(deleteCustomer())
       navigate("/")
@@ -81,6 +93,18 @@ const BillingDetails = () => {
                     console.log(verification.data);
 
                     if (verification.data.success) {
+
+                      const paymentData = {
+                          paymentId: response.razorpay_payment_id,
+                          orderId: customerData.orderID,
+                          amount: grandTotal,
+                          currency: "INR",
+                          status: "success",
+                          method: "ONLINE",
+                          contact: customerData.customerPhone
+                        };
+
+                        await updatePayment(paymentData);
 
                       enqueueSnackbar(verification.data.message, { variant: "success" });
                       dispatch(deleteCustomer())
