@@ -14,7 +14,7 @@ const TablesStatus = () => {
 
   function handleOrderCreation(table){
     if(table.status!="Booked" && customerInfo.customerName!="" && customerInfo.customerPhone!=""){
-      dispatch(setTableNumber({table:table.id}))
+      dispatch(setTableNumber({table:table.tableNo}))
       navigate("/menu")
     }
   }

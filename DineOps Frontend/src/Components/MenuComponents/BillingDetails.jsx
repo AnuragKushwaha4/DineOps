@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getTotal } from "../../Redux/Slice/MenuCartSlice";
 import { enqueueSnackbar } from "notistack";
 import { createOrder, verifyPayment } from "../../Https/index";
 import {useNavigate} from "react-router-dom"
-
+import {deleteCustomer} from "../../Redux/Slice/CustomerSlice"
 
 const loadScript = (src) => {
   return new Promise((resolve) => {
@@ -18,10 +18,16 @@ const loadScript = (src) => {
   });
 };
 
+
+
 const BillingDetails = () => {
+
   const customerData = useSelector((state) => state.customer);
   const total = useSelector(getTotal);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
   const tax = total * 0.05;
   const grandTotal = total + tax;
 
@@ -36,7 +42,8 @@ const BillingDetails = () => {
     // CASH PAYMENT
     if (paymentMethod === "CASH") {
       enqueueSnackbar("Order Placed (Cash)", { variant: "success" });
-      //navigate("/")
+      dispatch(deleteCustomer())
+      navigate("/")
       return;
     }
 
@@ -76,7 +83,8 @@ const BillingDetails = () => {
 
                     if (verification.data.success) {
                       enqueueSnackbar(verification.data.message, { variant: "success" });
-                      // navigate("/")
+                      dispatch(deleteCustomer())
+                      navigate("/")
                     } else {
                       enqueueSnackbar("Payment verification failed", { variant: "error" });
                     }
