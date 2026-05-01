@@ -4,7 +4,7 @@
 DineOps is a full-stack restaurant management system designed to streamline restaurant operations such as table management, order handling, and user authentication.
 The system provides role-based access for Admins, Staff, and Customers, enabling efficient order tracking and table allocation.
 
-This project focuses on scalable backend architecture, REST API design, and real-world restaurant workflows.
+This project focuses on scalable backend architecture, REST API design, and real-world restaurant workflows.  
 
 🚀 Features
 🔐 Authentication & Authorization
