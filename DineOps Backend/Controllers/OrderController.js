@@ -5,13 +5,13 @@ const OrdersModel = require("../Models/OrdersModel");
 
 async function addOrder(req,res,next){
     try{
-        const {customerDetails,orderStatus,bills,items}=req.body;
+        const {customerDetails,orderStatus,bills,items,table}=req.body;
 
-        if(!customerDetails || !orderStatus || !bills || !items){
+        if(!customerDetails || !orderStatus || !bills || !items || !table){
             return next(createHttpError(400,"All feilds are required"))
         }
 
-        const newOrder = await OrdersModel.create({customerDetails,orderStatus,bills,items});
+        const newOrder = await OrdersModel.create({customerDetails,orderStatus,bills,items,table});
         return res.status(200).json({
             success:true,
             message:"new Order created",
@@ -26,9 +26,9 @@ async function addOrder(req,res,next){
 async function getOrders(req,res,next){
     try{
 
-        const data = await OrdersModel.find();
+        const data = await OrdersModel.find().populate("table");
 
-
+        
         return res.status(200).json({success:true,message:"Data sent",data:data})
     }catch(error){
         next(error)

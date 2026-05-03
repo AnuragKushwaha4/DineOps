@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { ArrowLeft } from "lucide-react";
-
+import {useNavigate} from "react-router-dom"
 const Headings = ({ setCategory }) => {
 
   const [active, setActive] = useState("All");
-
+  const navigate = useNavigate()
   const handleClick = (category) => {
     setActive(category);
     setCategory(category);
@@ -21,7 +21,7 @@ const Headings = ({ setCategory }) => {
       {/* Top Section */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
-          <button className="p-2 rounded-lg bg-blue-50 hover:bg-blue-100 transition">
+          <button onClick={()=>{navigate("/")}} className="p-2 rounded-lg bg-blue-50 hover:bg-blue-100 transition">
             <ArrowLeft size={20} className="text-blue-600" />
           </button>
 
