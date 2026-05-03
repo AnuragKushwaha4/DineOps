@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTotal } from "../../Redux/Slice/MenuCartSlice";
 import { enqueueSnackbar } from "notistack";
-import { createOrder, verifyPayment } from "../../Https/index";
+import { addOrder, addTable, createOrder, verifyPayment } from "../../Https/index";
 import {useNavigate} from "react-router-dom"
 import {deleteCustomer} from "../../Redux/Slice/CustomerSlice"
 import { useEffect } from "react";
 import {updatePayments} from "../../Https/index"
+import {useMutation} from "@tanstack/react-query"
+
+
 const loadScript = (src) => {
   return new Promise((resolve) => {
     const script = document.createElement("script");
@@ -23,6 +26,7 @@ const loadScript = (src) => {
 
 const BillingDetails = () => {
 
+
   const customerData = useSelector((state) => state.customer);
   const itemsData = useSelector((state)=>state.cart)
 
@@ -35,8 +39,38 @@ const BillingDetails = () => {
   const [paymentMethod, setPaymentMethod] = useState();
 
 
+const orderMutation = useMutation({
+  mutationFn:(reqData)=>addOrder(reqData),
+  onSuccess:(resData)=>{
+    const {res}=resData
+    console.log(res);
+    enqueueSnackbar("Order Placed",{variant:"success"})
+
+  },
+  onError:(error)=>{
+    enqueueSnackbar("Order failed to place",{variant:"error"})
+  }
+})
 
 
+const orderDetails ={
+      customerDetails:{
+        name :customerData.customerName,
+        phone: customerData. customerPhone,
+        guest:customerData.customerCount
+       },
+      orderStatus:"In Progress",
+      bills:{
+        total:total,
+        tax: tax,
+        totalwithTax:grandTotal
+      },
+      items:itemsData,
+      table:customerData.tableID
+  }
+                      
+                      
+                      
 
 
 
@@ -60,7 +94,10 @@ const BillingDetails = () => {
         };
 
       await updatePayments(paymentData);
-      enqueueSnackbar("Order Placed (Cash)", { variant: "success" });
+      enqueueSnackbar("Payment Recieved : CASH", { variant: "success" });
+      setTimeout(()=>{
+        orderMutation.mutate(orderDetails)
+      },2000)
       dispatch(deleteCustomer())
       navigate("/")
       return;
@@ -116,22 +153,10 @@ const BillingDetails = () => {
                       enqueueSnackbar(verification.data.message, { variant: "success" });
 
                       //Place Order:
-                      const orderDetails ={
-                        customerDetails:{
-                          name :customerData.customerName,
-                          phone: customerData. customerPhone,
-                          guest:customerData.customerCount
-                        },
-                        orderStatus:"In Progress",
-                        bills:{
-                          total:total,
-                          tax: tax,
-                          totalwithTax:grandTotal
-                        },
-                        items:itemsData,
-                        table:customerData.tableNo
+                      setTimeout(()=>{
+                        orderMutation.mutate(orderDetails)
+                      },2000)
 
-                      }
                       dispatch(deleteCustomer())
                       navigate("/")
                     } else {
