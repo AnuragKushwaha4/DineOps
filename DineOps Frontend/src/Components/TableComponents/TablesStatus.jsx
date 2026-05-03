@@ -5,7 +5,7 @@ import { setTable } from "../../Redux/Slice/CustomerSlice";
 import { useQuery} from "@tanstack/react-query"
 import { GetTables } from "../../Https/index";
 import {enqueueSnackbar} from "notistack"
-const TablesStatus = () => {
+const TablesStatus = ({category}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const customerInfo = useSelector(state=>state.customer)
@@ -13,7 +13,8 @@ const TablesStatus = () => {
 
 
   function handleOrderCreation(table){
-    if(table.status!="Booked" && customerInfo.customerName!="" && customerInfo.customerPhone!=""){
+    
+    if(table.tableStatus!="Booked" && customerInfo.customerName!="" && customerInfo.customerPhone!=""){
       const tableSelected ={
         tableID:table._id,
         tableNo:table.tableNo
@@ -35,7 +36,7 @@ const TablesStatus = () => {
 
 
   return (
-    <div className="flex flex-wrap gap-8 p-8 bg-blue-50 min-h-screen">
+    <div className="flex flex-wrap gap-8 p-8 bg-blue-50  min-h-screen">
       {tableData?.data.data.map((table) => {
         const statusStyle =
           table.tableStatus === "Booked"
@@ -43,7 +44,8 @@ const TablesStatus = () => {
             : table.tableStatus === "Available"
             ? "bg-green-100 text-green-600"
             : "bg-yellow-100 text-yellow-600";
-
+        if(category==="Booked" && table.tableStatus!="Booked" )return null;
+        if(category==="Available" && table.tableStatus!="Available")return null;
         return (
           <div
             onClick={()=>{handleOrderCreation(table)}}
