@@ -4,7 +4,7 @@ const initialState = {
     customerName:"",
     customerPhone:"",
     customerCount:0,
-    tableNo:0,
+    tableNo:null,
     orderID:""
 }
 
@@ -24,7 +24,7 @@ export const CustomerSlice = createSlice({
         state.customerName=""
         state.customerPhone=""
         state.customerCount=0
-        state.tableNo=0
+        state.tableNo=null
         state.orderID=""
     },
     setTableNumber:(state,action)=>{
