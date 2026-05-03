@@ -24,6 +24,8 @@ const loadScript = (src) => {
 const BillingDetails = () => {
 
   const customerData = useSelector((state) => state.customer);
+  const itemsData = useSelector((state)=>state.cart)
+
   const total = useSelector(getTotal);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,6 +33,12 @@ const BillingDetails = () => {
   const grandTotal = total + tax;
 
   const [paymentMethod, setPaymentMethod] = useState();
+
+
+
+
+
+
 
   async function handlePlaceOrder() {
     if (!paymentMethod) {
@@ -51,7 +59,7 @@ const BillingDetails = () => {
           contact: customerData.customerPhone
         };
 
-        await updatePayments(paymentData);
+      await updatePayments(paymentData);
       enqueueSnackbar("Order Placed (Cash)", { variant: "success" });
       dispatch(deleteCustomer())
       navigate("/")
@@ -89,8 +97,7 @@ const BillingDetails = () => {
                   try {
 
                     const verification = await verifyPayment(response);
-
-                    console.log(verification.data);
+                    //Verification and DB updation:
 
                     if (verification.data.success) {
 
@@ -104,9 +111,27 @@ const BillingDetails = () => {
                           contact: customerData.customerPhone
                         };
 
-                        await updatePayments(paymentData);
+                      await updatePayments(paymentData);
 
                       enqueueSnackbar(verification.data.message, { variant: "success" });
+
+                      //Place Order:
+                      const orderDetails ={
+                        customerDetails:{
+                          name :customerData.customerName,
+                          phone: customerData. customerPhone,
+                          guest:customerData.customerCount
+                        },
+                        orderStatus:"In Progress",
+                        bills:{
+                          total:total,
+                          tax: tax,
+                          totalwithTax:grandTotal
+                        },
+                        items:itemsData,
+                        table:customerData.tableNo
+
+                      }
                       dispatch(deleteCustomer())
                       navigate("/")
                     } else {
@@ -139,6 +164,11 @@ const BillingDetails = () => {
     }
   }
 
+
+
+
+
+  
   return (
     <div className="flex flex-col gap-5 bg-white rounded-xl shadow-md p-4 h-full pb-14">
       {/* Price Section */}
