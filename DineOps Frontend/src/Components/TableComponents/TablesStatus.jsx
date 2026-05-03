@@ -1,7 +1,7 @@
 import React from "react";
 import {useNavigate} from "react-router-dom" 
 import { useDispatch, useSelector } from "react-redux";
-import { setTableNumber } from "../../Redux/Slice/CustomerSlice";
+import { setTable } from "../../Redux/Slice/CustomerSlice";
 import { useQuery} from "@tanstack/react-query"
 import { GetTables } from "../../Https/index";
 import {enqueueSnackbar} from "notistack"
@@ -14,7 +14,11 @@ const TablesStatus = () => {
 
   function handleOrderCreation(table){
     if(table.status!="Booked" && customerInfo.customerName!="" && customerInfo.customerPhone!=""){
-      dispatch(setTableNumber({table:table.tableNo}))
+      const tableSelected ={
+        tableID:table._id,
+        tableNo:table.tableNo
+      }
+      dispatch(setTable(tableSelected))
       navigate("/menu")
     }
   }
@@ -26,7 +30,7 @@ const TablesStatus = () => {
       }
   })
 
-  console.log(tableData?.data.data)
+  
   if(isError)enqueueSnackbar("Something went wrong",{variant:"error"})
 
 
@@ -34,9 +38,9 @@ const TablesStatus = () => {
     <div className="flex flex-wrap gap-8 p-8 bg-blue-50 min-h-screen">
       {tableData?.data.data.map((table) => {
         const statusStyle =
-          table.status === "Booked"
+          table.tableStatus === "Booked"
             ? "bg-red-100 text-red-600"
-            : table.status === "Available"
+            : table.tableStatus === "Available"
             ? "bg-green-100 text-green-600"
             : "bg-yellow-100 text-yellow-600";
 

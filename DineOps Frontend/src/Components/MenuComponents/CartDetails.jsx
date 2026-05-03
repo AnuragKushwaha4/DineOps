@@ -12,7 +12,7 @@ const CartDetails = () => {
     dispatch(deleteItem(item.id))
   }
   
-  
+  console.log(customerInfo.table)
   return (
     <div className="bg-white rounded-xl shadow-md flex flex-col h-full border border-gray-200 overflow-hidden">
 
@@ -46,7 +46,7 @@ const CartDetails = () => {
               <Table size={16} className="text-purple-500"/>
               <span>Table</span>
             </div>
-            <span className="font-medium text-gray-800">No {customerInfo.tableNo}</span>
+            <span className="font-medium text-gray-800">No {customerInfo.table?.tableNo}</span>
           </div>
 
           <div className="flex items-center justify-between bg-white rounded-lg px-3 py-2 border border-gray-100">
