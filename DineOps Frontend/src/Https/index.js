@@ -30,4 +30,12 @@ const GetTables =()=>api.get("/table")
 const createOrder =(data)=>api.post("/payment/createOrder",data)
 const verifyPayment =(data)=>api.post("/payment/verifyPayment",data)
 const updatePayments =(data)=>api.post("/payment/updatePayment",data)
-export {login,register,getData,logout,addTable,GetTables,createOrder,verifyPayment,updatePayments}
+
+
+
+//Order Handling APIs endpoints:
+
+const addOrder = (data)=>api.post("/order",data)
+const getOrders = ()=>api.get("/order")
+
+export {login,register,getData,logout,addTable,GetTables,createOrder,verifyPayment,updatePayments,addOrder,getOrders}
