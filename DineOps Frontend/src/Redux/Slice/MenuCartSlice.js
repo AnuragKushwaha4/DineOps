@@ -11,6 +11,9 @@ export const MenuCartSlice = createSlice({
     },
     deleteItem:(state,action)=>{
         return state.filter(item=>item.id!=action.payload)
+    },
+    deleteAllItems:(state)=>{
+      return []
     }
   },
 })
@@ -19,6 +22,6 @@ export const MenuCartSlice = createSlice({
 export const getTotal = (state) =>state.cart.reduce((total,item)=> total + item.price * item.count, 0);
 
 
-export const { addItems,deleteItem } = MenuCartSlice.actions
+export const { addItems,deleteItem ,deleteAllItems} = MenuCartSlice.actions
 
 export default MenuCartSlice.reducer

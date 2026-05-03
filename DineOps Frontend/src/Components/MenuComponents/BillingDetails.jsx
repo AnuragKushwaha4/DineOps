@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTotal } from "../../Redux/Slice/MenuCartSlice";
+import { getTotal,deleteAllItems } from "../../Redux/Slice/MenuCartSlice";
 import { enqueueSnackbar } from "notistack";
-import { addOrder, addTable, createOrder, verifyPayment } from "../../Https/index";
+import { addOrder, addTable, createOrder, updateTable, verifyPayment } from "../../Https/index";
 import {useNavigate} from "react-router-dom"
 import {deleteCustomer} from "../../Redux/Slice/CustomerSlice"
 import { useEffect } from "react";
@@ -29,31 +29,17 @@ const BillingDetails = () => {
 
   const customerData = useSelector((state) => state.customer);
   const itemsData = useSelector((state)=>state.cart)
-
   const total = useSelector(getTotal);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const tax = total * 0.05;
   const grandTotal = total + tax;
-
   const [paymentMethod, setPaymentMethod] = useState();
 
 
-const orderMutation = useMutation({
-  mutationFn:(reqData)=>addOrder(reqData),
-  onSuccess:(resData)=>{
-    const {res}=resData
-    console.log(res);
-    enqueueSnackbar("Order Placed",{variant:"success"})
-
-  },
-  onError:(error)=>{
-    enqueueSnackbar("Order failed to place",{variant:"error"})
-  }
-})
 
 
-const orderDetails ={
+  const orderDetails ={
       customerDetails:{
         name :customerData.customerName,
         phone: customerData. customerPhone,
@@ -66,8 +52,46 @@ const orderDetails ={
         totalwithTax:grandTotal
       },
       items:itemsData,
-      table:customerData.tableID
+      table:customerData.table?.tableID
   }
+
+
+  //Mutations: 
+  const tableMutation = useMutation({
+    mutationFn:(reqData)=>updateTable(reqData),
+    onSuccess:(resData)=>{
+      const {res}= resData;
+      console.log(res);
+      enqueueSnackbar("Table updated",{variant:"success"})
+      dispatch(deleteCustomer())
+      dispatch(deleteAllItems())
+      navigate("/")
+    },
+    onError:(error)=>{
+      enqueueSnackbar("Table not updated",{variant:"error"})
+    }
+  })
+
+const orderMutation = useMutation({
+  mutationFn:(reqData)=>addOrder(reqData),
+  onSuccess:(resData)=>{
+    enqueueSnackbar("Order Placed",{variant:"success"})
+    const tableDetails ={
+      tableStatus: "Booked",
+      orderID: resData?.data?.data._id,
+      tableID:customerData.table?.tableID
+    }
+
+    setTimeout(() => {
+      tableMutation.mutate(tableDetails)
+    }, 2000);
+
+  },
+  onError:(error)=>{
+    enqueueSnackbar("Order failed to place",{variant:"error"})
+  }
+})
+
                       
                       
                       
@@ -98,8 +122,6 @@ const orderDetails ={
       setTimeout(()=>{
         orderMutation.mutate(orderDetails)
       },2000)
-      dispatch(deleteCustomer())
-      navigate("/")
       return;
     }
 
@@ -111,7 +133,6 @@ const orderDetails ={
 
       if (!res) {
         enqueueSnackbar("Razorpay SDK failed to load", { variant: "error" });
-        //navigate("/")
         return;
       }
 
@@ -156,9 +177,6 @@ const orderDetails ={
                       setTimeout(()=>{
                         orderMutation.mutate(orderDetails)
                       },2000)
-
-                      dispatch(deleteCustomer())
-                      navigate("/")
                     } else {
                       enqueueSnackbar("Payment verification failed", { variant: "error" });
                     }

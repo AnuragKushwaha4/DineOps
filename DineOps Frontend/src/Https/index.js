@@ -23,6 +23,7 @@ const logout =()=>api.post("/auth/logout")
 
 const addTable = (data)=>api.post("/table",data)
 const GetTables =()=>api.get("/table")
+const updateTable =({tableID,...tableDetails})=>api.put(`/table/${tableID}`,tableDetails)
 
 
 //Payment Handling APIs endpoints:
@@ -38,4 +39,4 @@ const updatePayments =(data)=>api.post("/payment/updatePayment",data)
 const addOrder = (data)=>api.post("/order",data)
 const getOrders = ()=>api.get("/order")
 
-export {login,register,getData,logout,addTable,GetTables,createOrder,verifyPayment,updatePayments,addOrder,getOrders}
+export {login,register,getData,logout,addTable,GetTables,createOrder,verifyPayment,updatePayments,addOrder,getOrders,updateTable}
