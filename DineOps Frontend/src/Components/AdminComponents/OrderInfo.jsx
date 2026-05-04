@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import {useQuery,useMutation} from "@tanstack/react-query"
-import {getOrders} from "../../Https/index"
+import {useQuery,useMutation,useQueryClient} from "@tanstack/react-query"
+import {getOrders, updateOrder} from "../../Https/index"
 import {enqueueSnackbar} from "notistack"
 import Loader from "../CommanComponents/Loader"
 
 const OrdersInfo = () => {
 
-  
+  const queryClient = useQueryClient()
 
 
   const {data:orderData,isError,isLoading}=useQuery({
@@ -19,13 +19,43 @@ const OrdersInfo = () => {
     }
   })
 
-  console.log(orderData?.data?.data)
-  
+  const orderUpdateMutation = useMutation({
+    mutationFn:(updationData)=>updateOrder(updationData),
+    onSuccess:(resData)=>{
+      enqueueSnackbar(resData?.data?.message,{variant:"success"})
+      console.log(resData)
+      queryClient.invalidateQueries(["order"]);
+
+    },
+    onError:(error)=>{
+      const {response}=error
+      console.log(response)
+      enqueueSnackbar(response?.data?.message,{variant:"error"})
+    }
+  })
   
 
   function handleStatusChange(id, newStatus) {
-    
+    const updationData={
+      id:id,
+      orderStatus:newStatus
+    }
+     orderUpdateMutation.mutate(updationData)
   }
+
+
+  function formatDateTime(dateString) {
+      const date = new Date(dateString);
+
+      return date.toLocaleString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      });
+}
 
 
 
@@ -76,7 +106,7 @@ const OrdersInfo = () => {
               </span>
 
               <span className="text-xs text-gray-400">
-                {order.updatedAt}
+                {formatDateTime(order.updatedAt)}
               </span>
 
             </div>
@@ -110,7 +140,7 @@ const OrdersInfo = () => {
               <select
                 value={order.orderStatus}
                 onChange={(e) =>
-                  handleStatusChange(order._did, e.target.value)
+                  handleStatusChange(order._id, e.target.value)
                 }
                 className="border rounded-md px-2 py-1 text-sm focus:outline-none"
               >

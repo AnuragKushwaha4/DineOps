@@ -38,5 +38,6 @@ const updatePayments =(data)=>api.post("/payment/updatePayment",data)
 
 const addOrder = (data)=>api.post("/order",data)
 const getOrders = ()=>api.get("/order")
+const updateOrder =({id,...updationData})=>api.put(`/order/${id}`,updationData)
 
-export {login,register,getData,logout,addTable,GetTables,createOrder,verifyPayment,updatePayments,addOrder,getOrders,updateTable}
+export {login,register,getData,logout,addTable,GetTables,createOrder,verifyPayment,updatePayments,addOrder,getOrders,updateTable,updateOrder}
