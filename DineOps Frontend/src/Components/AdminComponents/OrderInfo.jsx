@@ -12,9 +12,12 @@ const OrdersInfo = () => {
     queryKey:["order"],
     queryFn:async ()=>{
       return await getOrders()
+    },
+    isError:()=>{
+      enqueueSnackbar("Something went wrong",{variant:"error"})
     }
   })
-  if(isError)enqueueSnackbar("Something went wrong",{variant:"error"})
+  
   
 
   function handleStatusChange(id, newStatus) {
