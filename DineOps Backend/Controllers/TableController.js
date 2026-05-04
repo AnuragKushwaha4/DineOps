@@ -37,7 +37,7 @@ async function UpdateTable(req,res,next) {
     try{
 
         const {tableStatus ,orderID}=req.body;
-        if(!tableStatus || !orderID)return next(createHttpError(400,"All fields required"))
+        if(!tableStatus || (tableStatus!="Available" && !orderID))return next(createHttpError(400,"All fields required"))
 
         const Table = await TableModel.findByIdAndUpdate(
             req.params.id,
