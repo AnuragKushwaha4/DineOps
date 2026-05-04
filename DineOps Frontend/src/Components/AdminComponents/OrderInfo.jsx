@@ -1,9 +1,21 @@
 import React, { useState } from "react";
 import { orders } from "../../Constants/Constants";
-
+import {useQuery,useMutation} from "@tanstack/react-query"
+import {getOrders} from "../../Https/index"
+import {enqueueSnackbar} from "notistack"
 const OrdersInfo = () => {
 
   const [ordersData, setOrdersData] = useState(orders);
+
+
+  const {orderData: data,isError,isLoading}=useQuery({
+    queryKey:["order"],
+    queryFn:async ()=>{
+      return await getOrders()
+    }
+  })
+  if(isError)enqueueSnackbar("Something went wrong",{variant:"error"})
+  
 
   function handleStatusChange(id, newStatus) {
     const updatedOrders = ordersData.map((order) =>
@@ -11,6 +23,9 @@ const OrdersInfo = () => {
     );
     setOrdersData(updatedOrders);
   }
+
+
+
 
   function statusStyle(status) {
     if (status === "Ready")
@@ -20,6 +35,15 @@ const OrdersInfo = () => {
     if (status === "Completed")
       return "bg-gray-200 text-gray-700";
     return "";
+  }
+
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-[60vh] text-gray-500">
+        <Loader/>
+      </div>
+    );
   }
 
   return (
