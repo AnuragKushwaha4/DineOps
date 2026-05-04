@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { orders } from "../../Constants/Constants";
 import {useQuery,useMutation} from "@tanstack/react-query"
 import {getOrders} from "../../Https/index"
 import {enqueueSnackbar} from "notistack"
+import Loader from "../CommanComponents/Loader"
+
 const OrdersInfo = () => {
 
-  const [ordersData, setOrdersData] = useState(orders);
+  
 
 
-  const {orderData: data,isError,isLoading}=useQuery({
+  const {data:orderData,isError,isLoading}=useQuery({
     queryKey:["order"],
     queryFn:async ()=>{
       return await getOrders()
@@ -17,14 +18,13 @@ const OrdersInfo = () => {
       enqueueSnackbar("Something went wrong",{variant:"error"})
     }
   })
+
+  console.log(orderData?.data?.data)
   
   
 
   function handleStatusChange(id, newStatus) {
-    const updatedOrders = ordersData.map((order) =>
-      order.id === id ? { ...order, status: newStatus } : order
-    );
-    setOrdersData(updatedOrders);
+    
   }
 
 
@@ -58,9 +58,9 @@ const OrdersInfo = () => {
 
       <div className="space-y-4">
 
-        {ordersData.map((order) => (
+        {orderData?.data?.data.map((order,index) => (
           <div
-            key={order.id}
+            key={order._id}
             className="flex items-center justify-between bg-gray-50 rounded-lg px-5 py-4"
           >
 
@@ -68,15 +68,15 @@ const OrdersInfo = () => {
             <div className="flex flex-col">
 
               <span className="font-semibold text-gray-800">
-                Order #{order.id}
+                Order #{index+1}
               </span>
 
               <span className="text-sm text-gray-500">
-                {order.customer} • Table {order.tableNo}
+                {order.customerDetails.name} • Table {order.table.tableNo}
               </span>
 
               <span className="text-xs text-gray-400">
-                {order.dateTime}
+                {order.updatedAt}
               </span>
 
             </div>
@@ -86,13 +86,13 @@ const OrdersInfo = () => {
 
               <div className="text-sm">
                 <p className="text-gray-400">Items</p>
-                <p className="font-medium">{order.items}</p>
+                <p className="font-medium">{order.items.length}</p>
               </div>
 
               <div className="text-sm">
                 <p className="text-gray-400">Total</p>
                 <p className="font-semibold text-blue-600">
-                  ₹{order.total}
+                  ₹{order.bills.totalwithTax}
                 </p>
               </div>
 
@@ -102,15 +102,15 @@ const OrdersInfo = () => {
             <div className="flex items-center gap-4">
 
               <span
-                className={`px-3 py-1 text-xs rounded-full font-medium ${statusStyle(order.status)}`}
+                className={`px-3 py-1 text-xs rounded-full font-medium ${statusStyle(order.orderStatus)}`}
               >
-                {order.status}
+                {order.orderStatus}
               </span>
 
               <select
-                value={order.status}
+                value={order.orderStatus}
                 onChange={(e) =>
-                  handleStatusChange(order.id, e.target.value)
+                  handleStatusChange(order._did, e.target.value)
                 }
                 className="border rounded-md px-2 py-1 text-sm focus:outline-none"
               >
