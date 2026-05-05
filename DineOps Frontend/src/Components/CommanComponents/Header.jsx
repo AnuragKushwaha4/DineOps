@@ -63,8 +63,7 @@ const Header = () => {
     <MdDashboard className="text-lg" />
   </button>
 )}
-        {/* Notification */}
-        <IoNotificationsOutline className="text-2xl text-blue-500 cursor-pointer hover:text-blue-600 transition"/>
+    
 
         {/* User Info */}
         <div className="flex items-center gap-3">
