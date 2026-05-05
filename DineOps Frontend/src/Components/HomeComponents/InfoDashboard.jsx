@@ -1,8 +1,36 @@
+import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { FiDollarSign, FiTrendingUp, FiPackage } from "react-icons/fi"
 import { MdTableRestaurant } from "react-icons/md"
-
+import { GetTables } from '../../Https'
+import {enqueueSnackbar} from "notistack"
+import Loader from '../CommanComponents/Loader'
 const InfoDashboard = () => {
+
+  const {data:tableData,isError,isLoading}= useQuery({
+    queryKey:["tables"],
+    queryFn:async ()=>{
+      return await GetTables();
+    },
+    isError:(error)=>{
+      const {response}=error;
+      enqueueSnackbar("Something went wrong",{variant:"error"})
+    }
+  })
+
+  let tableAvailable =0;
+  let tableOccupied=0;
+  tableData?.data?.data.forEach(table=> {
+    if(table.tableStatus==="Available")tableAvailable++;
+    if(table.tableStatus==="Booked")tableOccupied++;
+  });
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-[60vh] text-gray-500">
+        <Loader/>
+      </div>
+    );
+  }
   return (
     <div className="flex flex-col gap-6 w-full">
 
@@ -35,14 +63,14 @@ const InfoDashboard = () => {
         <div className="flex items-center gap-3">
           <MdTableRestaurant className="text-blue-500 text-2xl"/>
           <p className="text-gray-700 text-base">
-            Table Occupied: <span className="font-semibold">9</span>
+            Table Occupied: <span className="font-semibold">{tableOccupied}</span>
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <MdTableRestaurant className="text-green-500 text-2xl"/>
           <p className="text-gray-700 text-base">
-            Table Available: <span className="font-semibold">5</span>
+            Table Available: <span className="font-semibold">{tableAvailable}</span>
           </p>
         </div>
 
