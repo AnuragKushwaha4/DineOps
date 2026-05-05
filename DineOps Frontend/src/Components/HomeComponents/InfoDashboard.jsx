@@ -2,17 +2,17 @@ import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { FiDollarSign, FiTrendingUp, FiPackage } from "react-icons/fi"
 import { MdTableRestaurant } from "react-icons/md"
-import { GetTables } from '../../Https'
+import { GetTables,getOrders } from '../../Https'
 import {enqueueSnackbar} from "notistack"
 import Loader from '../CommanComponents/Loader'
 const InfoDashboard = () => {
 
-  const {data:tableData,isError,isLoading}= useQuery({
+  const {data:tableData,isError,isLoading:tableLoading}= useQuery({
     queryKey:["tables"],
     queryFn:async ()=>{
       return await GetTables();
     },
-    isError:(error)=>{
+    onError:(error)=>{
       const {response}=error;
       enqueueSnackbar("Something went wrong",{variant:"error"})
     }
@@ -24,7 +24,17 @@ const InfoDashboard = () => {
     if(table.tableStatus==="Available")tableAvailable++;
     if(table.tableStatus==="Booked")tableOccupied++;
   });
-  if (isLoading) {
+
+   const { data: orderData, isLoading:orderLoading} = useQuery({
+    queryKey: ["orders"],
+    queryFn: getOrders,
+    onError: () => {
+      enqueueSnackbar("Something went wrong", { variant: "error" });
+    }
+  });
+
+  const OrderInProcess = orderData?.data?.data.filter((order)=>{return order.orderStatus=="In Progress"}).length ||0;
+  if (tableLoading || orderLoading) {
     return (
       <div className="flex justify-center items-center h-[60vh] text-gray-500">
         <Loader/>
@@ -77,7 +87,7 @@ const InfoDashboard = () => {
         <div className="flex items-center gap-3">
           <FiPackage className="text-orange-500 text-2xl"/>
           <p className="text-gray-700 text-base">
-            Orders in Process: <span className="font-semibold">7</span>
+            Orders in Process: <span className="font-semibold">{OrderInProcess}</span>
           </p>
         </div>
 
