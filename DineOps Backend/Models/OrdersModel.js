@@ -20,7 +20,11 @@ const OrderSchema = new mongoose.Schema({
         totalwithTax:{type:Number,required:true}
     },
     items:[],
-    table:{type:mongoose.Schema.Types.ObjectId,ref:"Tables"}
+    table:{type:mongoose.Schema.Types.ObjectId,ref:"Tables"},
+    paymentData:{
+        razorpay_order_id:String,
+        razorpay_payment_id:String
+    }
 },{timestamps:true})
 
 
