@@ -21,6 +21,7 @@ const OrderSchema = new mongoose.Schema({
     },
     items:[],
     table:{type:mongoose.Schema.Types.ObjectId,ref:"Tables"},
+    paymentMethod:String,
     paymentData:{
         razorpay_order_id:String,
         razorpay_payment_id:String
