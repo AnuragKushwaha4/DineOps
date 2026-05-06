@@ -114,6 +114,7 @@ const OrdersInfo = () => {
     );
   }
 
+const orders = orderData?.data?.data? [...orderData.data.data].reverse() : [];
   return (
     <div className="bg-white rounded-xl shadow-sm p-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-6">
@@ -121,7 +122,7 @@ const OrdersInfo = () => {
       </h2>
 
       <div className="space-y-4">
-        {orderData?.data?.data.map((order, index) => (
+        {orders.map((order, index) => (
           <div
             key={order._id}
             className={`flex items-center justify-between rounded-lg px-5 py-4 

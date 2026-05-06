@@ -14,10 +14,9 @@ const OrdersList = ({category}) => {
     }
   });
 
-  const orders = orderData?.data?.data || [];
+  const orders = [...orderData?.data?.data].reverse() || [];
 
   const filteredOrders = (category==="All")?orders : orders.filter(order => order.orderStatus===category)
-  
   const getStatusColor = (status) => {
     if (status === "Ready") return "bg-green-100 text-green-700";
     if (status === "In Progress") return "bg-yellow-100 text-yellow-700";
