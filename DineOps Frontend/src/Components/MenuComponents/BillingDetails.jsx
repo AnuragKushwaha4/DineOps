@@ -56,7 +56,7 @@ const BillingDetails = () => {
   }
 
 
-  //Mutations: 
+  
   const tableMutation = useMutation({
     mutationFn:(reqData)=>updateTable(reqData),
     onSuccess:(resData)=>{
