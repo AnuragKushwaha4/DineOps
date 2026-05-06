@@ -8,7 +8,7 @@ import {deleteCustomer} from "../../Redux/Slice/CustomerSlice"
 import { useEffect } from "react";
 import {updatePayments} from "../../Https/index"
 import {useMutation} from "@tanstack/react-query"
-
+import Invoice from "../../InvoicePrint/Invoice";
 
 const loadScript = (src) => {
   return new Promise((resolve) => {
@@ -27,6 +27,8 @@ const loadScript = (src) => {
 const BillingDetails = () => {
 
 
+
+
   const customerData = useSelector((state) => state.customer);
   const itemsData = useSelector((state)=>state.cart)
   const total = useSelector(getTotal);
@@ -34,8 +36,11 @@ const BillingDetails = () => {
   const dispatch = useDispatch();
   const tax = total * 0.05;
   const grandTotal = total + tax;
-  const [paymentMethod, setPaymentMethod] = useState();
 
+
+  const [showInvoice,setShowInvoice]=useState(false)
+  const [paymentMethod, setPaymentMethod] = useState();
+  const [orderInfo,setOrderInfo] = useState()
   
   const tableMutation = useMutation({
     mutationFn:(reqData)=>updateTable(reqData),
@@ -45,7 +50,6 @@ const BillingDetails = () => {
       enqueueSnackbar("Table updated",{variant:"success"})
       dispatch(deleteCustomer())
       dispatch(deleteAllItems())
-      navigate("/")
     },
     onError:(error)=>{
       enqueueSnackbar("Table not updated",{variant:"error"})
@@ -55,6 +59,10 @@ const BillingDetails = () => {
 const orderMutation = useMutation({
   mutationFn:(reqData)=>addOrder(reqData),
   onSuccess:(resData)=>{
+    const {data}= resData.data;  
+    console.log(data)
+    setOrderInfo(data)
+    setShowInvoice(true)
     enqueueSnackbar("Order Placed",{variant:"success"})
     const tableDetails ={
       tableStatus: "Booked",
@@ -285,9 +293,6 @@ const orderMutation = useMutation({
 
       {/* Buttons */}
       <div className="flex flex-col gap-2 mt-auto">
-        <button className="w-full py-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition">
-          Print Receipt
-        </button>
 
         <button
           onClick={handlePlaceOrder}
@@ -296,6 +301,9 @@ const orderMutation = useMutation({
           Place Order
         </button>
       </div>
+      {showInvoice && (
+        <Invoice orderInfo={orderInfo} setShowInvoice={setShowInvoice} navigate={navigate}/>
+      )}
     </div>
   );
 };
