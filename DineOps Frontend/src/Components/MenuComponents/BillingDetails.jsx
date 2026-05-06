@@ -39,22 +39,26 @@ const BillingDetails = () => {
 
 
 
-  const orderDetails ={
-      customerDetails:{
-        name :customerData.customerName,
-        phone: customerData. customerPhone,
-        guest:customerData.customerCount
-       },
-      orderStatus:"In Progress",
-      bills:{
-        total:total,
-        tax: tax,
-        totalwithTax:grandTotal
-      },
-      items:itemsData,
-      table:customerData.table?.tableID,
-  }
-
+const orderDetails ={
+     customerDetails:{
+       name :customerData.customerName,
+       phone: customerData. customerPhone,
+       guest:customerData.customerCount
+     },
+     orderStatus:"In Progress",
+     bills:{
+       total:total,
+       tax: tax,
+       totalwithTax:grandTotal
+     },
+     items:itemsData,
+     table:customerData.table?.tableID,
+     paymentMethod:paymentMethod,
+     paymentData:{
+         razorpay_order_id:(paymentMethod==="ONLINE")?response.razorpay_order_id:"",
+         razorpay_payment_id:(paymentMethod==="ONLINE")?response.razorpay_payment_id:""
+     }
+ }
 
   
   const tableMutation = useMutation({
@@ -120,22 +124,6 @@ const orderMutation = useMutation({
       await updatePayments(paymentData);
       enqueueSnackbar("Payment Recieved : CASH", { variant: "success" });
 
-        const orderDetails ={
-      customerDetails:{
-        name :customerData.customerName,
-        phone: customerData. customerPhone,
-        guest:customerData.customerCount
-       },
-      orderStatus:"In Progress",
-      bills:{
-        total:total,
-        tax: tax,
-        totalwithTax:grandTotal
-      },
-      items:itemsData,
-      table:customerData.table?.tableID,
-      paymentMethod:paymentMethod
-  }
       setTimeout(()=>{
         orderMutation.mutate(orderDetails)
       },2000)
@@ -189,27 +177,6 @@ const orderMutation = useMutation({
                       await updatePayments(paymentData);
 
                       enqueueSnackbar(verification.data.message, { variant: "success" });
-
-                       const orderDetails ={
-                            customerDetails:{
-                              name :customerData.customerName,
-                              phone: customerData. customerPhone,
-                              guest:customerData.customerCount
-                            },
-                            orderStatus:"In Progress",
-                            bills:{
-                              total:total,
-                              tax: tax,
-                              totalwithTax:grandTotal
-                            },
-                            items:itemsData,
-                            table:customerData.table?.tableID,
-                            paymentMethod:paymentMethod,
-                            paymentData:{
-                                razorpay_order_id:response.razorpay_order_id,
-                                razorpay_payment_id:response.razorpay_payment_id
-                            }
-                        }
 
                       //Place Order:
                       setTimeout(()=>{
