@@ -8,6 +8,7 @@ const Invoice = ({ orderInfo, setShowInvoice,navigate }) => {
 
   if (!orderInfo) return null;
 
+  
   const handlePrint = () => {
 
     const printContent = invoiceRef.current.innerHTML;
@@ -188,7 +189,7 @@ const Invoice = ({ orderInfo, setShowInvoice,navigate }) => {
                 </div>
 
                 <h1 className="font-semibold text-sm">
-                  ₹{(item.price * item.quantity).toFixed(2)}
+                  ₹{((Number(item.price) || 0) * (Number(item.count) || 0)).toFixed(2)}
                 </h1>
 
               </div>

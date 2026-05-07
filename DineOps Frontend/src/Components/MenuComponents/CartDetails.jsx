@@ -12,7 +12,7 @@ const CartDetails = () => {
     dispatch(deleteItem(item.id))
   }
   
-  console.log(customerInfo.table)
+  
   return (
     <div className="bg-white rounded-xl shadow-md flex flex-col h-full border border-gray-200 overflow-hidden">
 
