@@ -1,19 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import {useQuery} from "@tanstack/react-query"
 import {getOrders} from "../../Https/index"
 import {enqueueSnackbar} from "notistack"
-
+import Loader from '../CommanComponents/Loader'
 const RecentOrders = () => {
 
-  const orders = new Array(7).fill({
-    name: "Aditya Kushwaha",
-    items: 5,
-    table: 5,
-    status: "Ready"
-  });
 
-  const {orderData: data, onError,isLoading}= useQuery({
+  const [viewAll,setViewAll] = useState(false)
+
+  const {data:orderData, onError,isLoading}= useQuery({
     queryKey:["orders"],
     queryFn:async (reqData)=>{
       return await getOrders()
@@ -25,6 +21,7 @@ const RecentOrders = () => {
   })
 
 
+  
  if (isLoading) {
     return (
       <div className="flex justify-center items-center h-[60vh] text-gray-500">
@@ -34,7 +31,8 @@ const RecentOrders = () => {
   }
 
 
-
+const allorders = [...orderData?.data?.data].reverse() ||[];
+const orders = (viewAll)?allorders:allorders.slice(0,5)
   return (
     <div className="bg-white rounded-xl shadow-md p-6 w-full">
 
@@ -44,8 +42,8 @@ const RecentOrders = () => {
           Recent Orders
         </h1>
 
-        <button className="text-blue-600 text-sm font-medium hover:underline">
-          View all
+        <button onClick={()=>setViewAll((viewAll)?false:true)} className="text-blue-600 text-sm font-medium hover:underline">
+          {(viewAll)?"view less":"view all"}
         </button>
       </div>
 
@@ -64,7 +62,7 @@ const RecentOrders = () => {
 
         {orders.map((order, index) => {
 
-          const initial = order.name.charAt(0)
+          const initial = order.customerDetails.name.charAt(0)
 
           return (
             <div
@@ -83,19 +81,25 @@ const RecentOrders = () => {
                 {/* Customer Info */}
                 <div>
                   <h1 className="text-sm font-semibold text-gray-800">
-                    {order.name}
+                    {order.customerDetails.name}
                   </h1>
 
                   <p className="text-xs text-gray-500">
-                    {order.items} items • Table {order.table}
+                    {order.items.length} items • Table {order.table.tableNo}
                   </p>
                 </div>
 
               </div>
 
               {/* Status */}
-              <div className="px-3 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">
-                {order.status}
+              <div className={`px-3 py-1 text-xs font-medium rounded-full
+    ${
+      order.orderStatus === "Completed"? "bg-green-100 text-green-700": order.orderStatus === "In Progress"
+      ? "bg-yellow-100 text-yellow-700": order.orderStatus === "In Progess"
+      ? "bg-blue-100 text-blue-700": order.orderStatus === "Ready"
+      ? "bg-red-100 text-red-700": "bg-gray-100 text-gray-700"
+    }`}>
+                {order.orderStatus}
               </div>
 
             </div>
