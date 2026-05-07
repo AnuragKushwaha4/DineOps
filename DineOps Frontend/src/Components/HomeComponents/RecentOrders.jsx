@@ -1,5 +1,8 @@
 import React from 'react'
 import { FiSearch } from 'react-icons/fi'
+import {useQuery} from "@tanstack/react-query"
+import {getOrders} from "../../Https/index"
+import {enqueueSnackbar} from "notistack"
 
 const RecentOrders = () => {
 
@@ -9,6 +12,28 @@ const RecentOrders = () => {
     table: 5,
     status: "Ready"
   });
+
+  const {orderData: data, onError,isLoading}= useQuery({
+    queryKey:["orders"],
+    queryFn:async (reqData)=>{
+      return await getOrders()
+    },
+    onError:(error)=>{
+      const {response}=error;
+      enqueueSnackbar(response.data.message,{variant:"error"})
+    }
+  })
+
+
+ if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-[60vh] text-gray-500">
+        <Loader/>
+      </div>
+    );
+  }
+
+
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6 w-full">
