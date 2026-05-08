@@ -290,7 +290,7 @@ export const salads = [
     id: 5,
     name: "Tuna Salad",
     price: 350,
-  
+    category: "Vegetarian"
   }
 ];
 
