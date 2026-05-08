@@ -145,14 +145,14 @@ const Register = () => {
 
             <button
               type="button"
-              onClick={() => handleRole("waiter")}
+              onClick={() => handleRole("chef")}
               className={`py-2 rounded-lg border font-medium transition
-              ${formData.role === "waiter"
+              ${formData.role === "chef"
                 ? "bg-blue-600 text-white border-blue-600"
                 : "bg-white text-gray-600 hover:bg-blue-50"}
               `}
             >
-              Waiter
+              Chef
             </button>
 
           </div>
