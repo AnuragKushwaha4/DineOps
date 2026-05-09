@@ -32,7 +32,8 @@ const InfoDashboard = () => {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   });
-
+  console.log(orderData?.data?.data);
+  console.log(Date.now())
   const OrderInProcess = orderData?.data?.data.filter((order)=>{return order.orderStatus=="In Progress"}).length ||0;
   if (tableLoading || orderLoading) {
     return (
