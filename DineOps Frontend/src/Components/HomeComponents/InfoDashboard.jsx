@@ -32,9 +32,9 @@ const InfoDashboard = () => {
       enqueueSnackbar("Something went wrong", { variant: "error" });
     }
   });
-  console.log(orderData?.data?.data);
-  console.log(Date.now())
-  const OrderInProcess = orderData?.data?.data.filter((order)=>{return order.orderStatus=="In Progress"}).length ||0;
+  
+
+
   if (tableLoading || orderLoading) {
     return (
       <div className="flex justify-center items-center h-[60vh] text-gray-500">
@@ -42,6 +42,20 @@ const InfoDashboard = () => {
       </div>
     );
   }
+  let amount = 0;
+  let orderCount = 0;
+   for(let orders of orderData?.data?.data){
+    if(new Date().getDate()== orders.createdAt.slice(8,10) ){
+      console.log(orders)
+      amount+=orders.bills.totalwithTax;
+      orderCount++
+    }
+
+  }
+
+  const OrderInProcess = orderData?.data?.data.filter((order)=>{return order.orderStatus=="In Progress"}).length ||0;
+
+
   return (
     <div className="flex flex-col gap-6 w-full">
 
@@ -56,13 +70,13 @@ const InfoDashboard = () => {
         </div>
 
         <p className="text-3xl font-bold text-gray-800">
-          ₹12,000
+          {amount}
         </p>
 
         <div className="flex items-center gap-3 pt-3 border-t">
           <FiTrendingUp className="text-blue-500 text-xl"/>
           <p className="text-sm text-gray-600">
-            Average Order Value: <span className="font-semibold">₹500</span>
+            Average Order Value: <span className="font-semibold">{amount/orderCount}</span>
           </p>
         </div>
 
