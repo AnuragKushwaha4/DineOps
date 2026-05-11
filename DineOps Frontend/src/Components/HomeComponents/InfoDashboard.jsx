@@ -76,7 +76,7 @@ const InfoDashboard = () => {
         <div className="flex items-center gap-3 pt-3 border-t">
           <FiTrendingUp className="text-blue-500 text-xl"/>
           <p className="text-sm text-gray-600">
-            Average Order Value: <span className="font-semibold">{amount/orderCount}</span>
+            Average Order Value: <span className="font-semibold">{amount/orderCount || 0}</span>
           </p>
         </div>
 
