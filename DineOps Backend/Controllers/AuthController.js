@@ -64,7 +64,7 @@ async function Login(req,res,next){
         })
 
         res.cookie("accessToken",accessToken,{
-             httpOnly: true,
+            httpOnly: true,
             secure: false,
             sameSite: "lax",
             maxAge: 24 * 60 * 60 * 1000
