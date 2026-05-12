@@ -31,11 +31,15 @@ const BillingDetails = () => {
 
   const customerData = useSelector((state) => state.customer);
   const itemsData = useSelector((state)=>state.cart)
-  const total = useSelector(getTotal);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const total = useSelector(getTotal)
+
   const tax = total * 0.05;
   const grandTotal = total + tax;
+
+  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
 
 
   const [showInvoice,setShowInvoice]=useState(false)
