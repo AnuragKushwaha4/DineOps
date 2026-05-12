@@ -45,7 +45,7 @@ function App() {
           path:"admin",
           element:<ProtectedAdmin>
             <AdminDashboard/>
-          </ProtectedAdmin>
+              </ProtectedAdmin>
         }
       ]
     },
