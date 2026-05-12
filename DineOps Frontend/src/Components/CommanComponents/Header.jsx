@@ -39,7 +39,7 @@ const Header = () => {
       <div onClick={()=>navigate("/")} className="flex items-center gap-3">
         <img src={logo} alt="logo" className="w-10 h-10 rounded-full object-cover"/>
         <h1 className="text-xl font-semibold text-blue-600">
-          The Modern Bite
+          DineOps
         </h1>
       </div>
 

@@ -11,7 +11,7 @@ const AuthHeader = () => {
       />
 
       <h1 className="text-2xl font-bold text-blue-600 tracking-wide">
-        The Modern Bite
+        DineOps
       </h1>
 
       <p className="text-sm text-gray-500">
