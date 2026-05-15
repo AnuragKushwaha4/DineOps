@@ -12,6 +12,7 @@ Secure JWT-based authentication
 Role-based access control
 Protected routes using middleware
 Secure cookies for session handling
+
 👥 User Management
 User registration and login
 Roles supported:
@@ -23,16 +24,19 @@ Create restaurant tables
 View all tables
 Manage table availability
 Assign tables to orders
+
 🧾 Order Management
 Create new orders
 Fetch order by ID
 Update order status
 Associate orders with tables and users
+
 ⚙️ Backend Architecture
 Modular folder structure
 Express middleware handling
 Centralized error handling
 MongoDB schema validation
+
 🏗️ Tech Stack
 Backend
 Node.js
